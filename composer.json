@@ -1,0 +1,28 @@
+{
+    "name": "maddy83/stagger",
+    "description": "Stagger is a minimalist static website generator.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pekka Laiho",
+            "email": "pekka.i.laiho@gmail.com",
+            "homepage": "http://laihoconsulting.com/"
+        }
+    ],
+	"require" : {
+        "league/commonmark": "~1.6",
+        "symfony/yaml": "~5.3",
+        "twig/twig": "~3.3"
+	},
+    "require-dev": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Stagger\\": "src/"
+        }
+    },
+    "bin": [
+        "bin/stagger"
+    ]
+}

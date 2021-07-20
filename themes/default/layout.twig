@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% if lang %}
+    <html lang="{{ lang }}">
+{% else %}
+    <html>
+{% endif %}
+<head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content="Stagger" />
+    {% if description %}
+        <meta name="description" content="{{ description }}" />
+    {% endif %}
+    {% if icon_type and icon_url %}
+        <link rel="icon" type="{{ icon_type }}" href="{{ icon_url }}" />
+    {% endif %}
+    {% if url %}
+        <link rel="canonical" href="{{ url }}" />
+    {% endif %}
+    {% for cssfile in css %}
+        <link rel="stylesheet" type="text/css" href="/css/{{ cssfile }}" />
+    {% endfor %}
+    {% for jsfile in js %}
+        <script src="/js/{{ jsfile }}" />
+    {% endfor %}
+</head>
+<body>
+    <div class="header">
+
+    </div>
+    <div class="content">
+        {{ content }}
+    </div>
+    <div class="footer">
+
+    </div>
+</body>
+</html>

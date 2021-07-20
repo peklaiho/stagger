@@ -1,0 +1,63 @@
+#!/usr/bin/env php
+<?php
+
+function exit_with_error($error) {
+    print('Error: ' . $error . PHP_EOL);
+    exit(1);
+}
+
+// Composer autoloader
+$autoload = null;
+$autoloadLocations = [
+    __DIR__ . '/vendor/autoload.php',
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php'
+];
+
+foreach ($autoloadLocations as $file) {
+    if (file_exists($file)) {
+        $autoload = $file;
+        break;
+    }
+}
+
+if ($autoload) {
+    require($autoload);
+} else {
+    exit_with_error('Unable to find Composer autoloader.');
+}
+
+// Directories, constants for now
+define('SITES_DIR', __DIR__ . '/../sites/');
+define('THEMES_DIR', __DIR__ . '/../themes/');
+define('OUTPUT_DIR', __DIR__ . '/../output/');
+
+if (!is_readable(SITES_DIR)) {
+    exit_with_error('Sites directory ' . SITES_DIR . ' is not readable.');
+}
+if (!is_readable(THEMES_DIR)) {
+    exit_with_error('Themes directory ' . THEMES_DIR . ' is not readable.');
+}
+if (!is_writable(OUTPUT_DIR)) {
+    exit_with_error('Output directory ' . OUTPUT_DIR . ' is not writable.');
+}
+
+$sitename = $argv[1] ?? null;
+if (!$sitename) {
+    exit_with_error('Give site name as argument.');
+}
+
+$parser = new Stagger\Parser();
+$site = $parser->parse($sitename);
+
+$theme = new Stagger\Theme($site->theme);
+
+$markdownEnv = new League\CommonMark\Environment();
+$markdownConv = new League\CommonMark\MarkdownConverter($markdownEnv);
+
+$generator = new Stagger\Generator($markdownConv);
+$generator->generate($site, $theme);
+
+print("Generated site $sitename in " . OUTPUT_DIR . "$sitename." . PHP_EOL);
+
+var_dump($site);
