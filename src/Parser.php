@@ -5,11 +5,11 @@ use Symfony\Component\Yaml\Yaml;
 
 class Parser
 {
-    public function parse(string $name): Site
+    public function parse(string $id): Site
     {
-        $dir = SITES_DIR . $name . '/';
+        $dir = SITES_DIR . $id . '/';
         if (!is_readable($dir)) {
-            exit_with_error("Site $name not found or directory $dir is not readable.");
+            exit_with_error("Site $id not found or directory $dir is not readable.");
         }
 
         $sitefile = $dir . 'site.yml';
@@ -17,34 +17,59 @@ class Parser
             exit_with_error("File site.yml does not exist or is not readable.");
         }
 
-        $info = Yaml::parse(file_get_contents($sitefile));
+        // Parse site.yml
+        try {
+            $info = Yaml::parse(file_get_contents($sitefile));
+        } catch (\Exception $ex) {
+            exit_with_error("Unable to parse site.yml: " . $ex->getMessage());
+        }
 
-        $site = new Site();
-
-        // Required info
+        // Check that required info is present
         $required = ['name', 'url', 'theme'];
         foreach ($required as $key) {
-            if (array_key_exists($key, $info)) {
-                $site->$key = $info[$key];
-            } else {
+            if (!array_key_exists($key, $info)) {
                 exit_with_error("File site.yml does not contain required key $key.");
             }
         }
 
-        // Pages
+        // Create site object
+        $site = new Site($id, $info['name'], $info['url'], $info['theme']);
+
+        // Optional info
+        $site->description = $info['description'] ?? null;
+        $site->lang = $info['lang'] ?? null;
+
+        // Favicon
+        if (array_key_exists('icon', $info)) {
+            $iconfile = $dir . $info['icon'];
+            if (!is_readable($iconfile)) {
+                exit_with_error("File " . $info['icon'] . " is not readable.");
+            }
+
+            $site->icon = [
+                'name' => $info['icon'],
+                'type' => mime_content_type($iconfile),
+                'data' => file_get_contents($iconfile)
+            ];
+        }
+
+        // Styles and scripts
+        $site->css = $this->readCssJs($dir . 'css/', $info['css'] ?? []);
+        $site->js = $this->readCssJs($dir . 'js/', $info['js'] ?? []);
+
+        // Read pages
         $site->pages = $this->readPages($dir . 'pages/', $info['pages']);
         if (empty($site->pages)) {
             exit_with_error("No pages found, at least one page is required.");
         }
 
-        // Optional info
-        $site->description = $info['description'] ?? null;
-        $site->icon = $info['icon'] ?? null;
-        $site->lang = $info['lang'] ?? null;
-
-        // Styles and scripts
-        $site->css = $this->readCssJs($dir . 'css/', $info['css'] ?? []);
-        $site->js = $this->readCssJs($dir . 'js/', $info['js'] ?? []);
+        // Read menu
+        $site->menu = $info['menu'] ?? [];
+        foreach ($site->menu as $menupage) {
+            if (!array_key_exists($menupage, $site->pages)) {
+                exit_with_error("Menu references page $menupage that does not exist.");
+            }
+        }
 
         return $site;
     }
@@ -68,22 +93,45 @@ class Parser
     private function readPages(string $dir, array $pagenames): array
     {
         $pages = [];
+        $homepage = true;
 
-        foreach ($pagenames as $pagename) {
-            $pagedir = $dir . $pagename . '/';
-            $pagefile = $pagedir . '/page.md';
+        foreach ($pagenames as $id) {
+            $pagedir = $dir . $id . '/';
+            $infofile = $pagedir . 'page.yml';
+            $contfile = $pagedir . 'page.md';
 
-            if (!is_readable($pagefile)) {
-                exit_with_error("File page.md for page $pagename is not readable.");
+            if (!is_readable($infofile)) {
+                exit_with_error("File page.yml for page $id is not readable.");
+            } elseif (!is_readable($contfile)) {
+                exit_with_error("File page.md for page $id is not readable.");
             }
 
-            $page = new Page();
+            // Parse page.yml
+            try {
+                $info = Yaml::parse(file_get_contents($infofile));
+            } catch (\Exception $ex) {
+                exit_with_error("Unable to parse page.yml: " . $ex->getMessage());
+            }
 
-            $page->name = $pagename;
-            $page->content = file_get_contents($pagefile);
+            // Check that required info is present
+            $required = ['name'];
+            foreach ($required as $key) {
+                if (!array_key_exists($key, $info)) {
+                    exit_with_error("File page.yml does not contain required key $key.");
+                }
+            }
+
+            $page = new Page(
+                $id,
+                $info['name'],
+                file_get_contents($contfile),
+                $homepage
+            );
+
             $page->files = $this->readPageFiles($pagedir);
 
-            $pages[] = $page;
+            $pages[$id] = $page;
+            $homepage = false;
         }
 
         return $pages;
@@ -96,8 +144,9 @@ class Parser
         foreach (glob($dir . '*') as $file) {
             $pi = pathinfo($file);
 
-            // Skip over main file
-            if ($pi['basename'] == 'page.md') {
+            // Skip over page.md and page.yml
+            if ($pi['basename'] == 'page.md' ||
+                $pi['basename'] == 'page.yml') {
                 continue;
             }
 

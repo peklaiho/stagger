@@ -31,12 +31,14 @@ class Theme
         $required = ['layout'];
         foreach ($required as $req) {
             if (!array_key_exists($req, $templates)) {
-                exit_with_error("Required template $req.twig missing from theme.");
+                exit_with_error("Required template $req.twig missing from theme $name.");
             }
         }
 
         $loader = new ArrayLoader($templates);
-        $this->twig = new Environment($loader);
+        $this->twig = new Environment($loader, [
+            'autoescape' => false
+        ]);
     }
 
     public function render(string $template, array $data = []): string

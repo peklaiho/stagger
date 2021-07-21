@@ -1,0 +1,43 @@
+# Name of the site, used in title (required)
+name: Example site
+
+# Full URL of the site with trailing slash (required)
+url: http://example.com/
+
+# Theme to use for HTML templates (required)
+theme: default
+
+# Meta description (optional)
+description: Description of an example site made with Stagger.
+
+# Favicon (optional)
+icon: favicon.png
+
+# Site language (optional)
+lang: en
+
+# CSS-files
+css: [
+  spectre.css,
+  spectre-icons.css,
+  style.css
+]
+
+# JS-files
+js: [
+  app.js
+]
+
+# Pages, first is automatically the home page
+pages: [
+  home,
+  about,
+  blog
+]
+
+# Menu
+menu: [
+  home,
+  about,
+  blog
+]

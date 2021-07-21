@@ -1,39 +1,61 @@
 <!DOCTYPE html>
 {% if lang %}
-    <html lang="{{ lang }}">
+<html lang="{{ lang }}">
 {% else %}
-    <html>
+<html>
 {% endif %}
 <head>
     <meta charset="utf-8" />
-    <title>{{ title }}</title>
+    <title>
+    {% if home %}
+        {{ site }}
+    {% else %}
+        {{ name }} | {{ site }}
+    {% endif %}
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content="Stagger" />
     {% if description %}
-        <meta name="description" content="{{ description }}" />
+    <meta name="description" content="{{ description }}" />
     {% endif %}
-    {% if icon_type and icon_url %}
-        <link rel="icon" type="{{ icon_type }}" href="{{ icon_url }}" />
+    {% if icon %}
+    <link rel="icon" type="{{ icon.type }}" href="/{{ icon.name }}" />
     {% endif %}
     {% if url %}
-        <link rel="canonical" href="{{ url }}" />
+    <link rel="canonical" href="{{ url }}" />
     {% endif %}
     {% for cssfile in css %}
-        <link rel="stylesheet" type="text/css" href="/css/{{ cssfile }}" />
+    <link rel="stylesheet" type="text/css" href="/css/{{ cssfile }}" />
     {% endfor %}
     {% for jsfile in js %}
-        <script src="/js/{{ jsfile }}" />
+    <script src="/js/{{ jsfile }}"></script>
     {% endfor %}
 </head>
 <body>
-    <div class="header">
-
-    </div>
-    <div class="content">
-        {{ content }}
-    </div>
-    <div class="footer">
-
+    <div class="container grid-lg">
+        <div class="columns">
+            <div class="column col-12">
+                <header class="navbar">
+                    <section class="navbar-section">
+                    </section>
+                    <section class="navbar-section">
+                    {% for mlink, mname in menu %}
+                    {% if link == mlink %}
+                    <a href="{{ mlink }}" class="btn btn-link active">{{ mname }}</a>
+                    {% else %}
+                    <a href="{{ mlink }}" class="btn btn-link">{{ mname }}</a>
+                    {% endif %}
+                    {% endfor %}
+                    </section>
+                </header>
+                <div class="divider"></div>
+            </div>
+        </div>
+        <div class="columns">
+            <div class="column col-12">
+                {{ content }}
+            </div>
+        </div>
     </div>
 </body>
 </html>

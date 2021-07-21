@@ -1,0 +1,16 @@
+header {
+	padding-top: 25px;
+	padding-bottom: 20px;
+}
+
+header a {
+	font-size: 1.2em !important;
+	color: #3b4351 !important;
+}
+
+header a:focus,
+header a:hover,
+header a:active,
+header a.active {
+  color: #302ecd !important;
+}

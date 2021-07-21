@@ -14,9 +14,73 @@ class Generator
 
     public function generate(Site $site, Theme $theme): void
     {
-        $outdir = OUTPUT_DIR . $site->name . '/';
+        $outdir = OUTPUT_DIR . $site->id . '/';
 
-        $data = [];
+        $this->makedir($outdir);
+
+        // Write css
+        if ($site->css) {
+            $cssdir = $outdir . 'css/';
+            $this->makedir($cssdir);
+
+            foreach ($site->css as $fname => $fcontent) {
+                file_put_contents($cssdir . $fname, $fcontent);
+            }
+        }
+
+        // Write js
+        if ($site->js) {
+            $jsdir = $outdir . 'js/';
+            $this->makedir($jsdir);
+
+            foreach ($site->js as $fname => $fcontent) {
+                file_put_contents($jsdir . $fname, $fcontent);
+            }
+        }
+
+        // Write icon
+        if ($site->icon) {
+            $iconfile = $outdir . $site->icon['name'];
+            file_put_contents($iconfile, $site->icon['data']);
+        }
+
+        // Write pages
+        foreach ($site->pages as $page) {
+            $pagedir = $outdir;
+            if (!$page->homepage) {
+                $pagedir .= $page->id . '/';
+            }
+
+            $this->makeDir($pagedir);
+
+            // Data for Twig templates
+            $data = $page->getTwigData($this->getCommonTwigData($site));
+
+            // Render content using Markdown
+            $data['content'] = $this->markdown->convertToHtml($page->content);
+
+            // Render HTML using Twig
+            $html = $theme->render('layout', $data);
+
+            // Write it to file
+            file_put_contents($pagedir . 'index.html', $html);
+
+            // Write other files
+            foreach ($page->files as $fname => $fcontent) {
+                file_put_contents($pagedir . $fname, $fcontent);
+            }
+        }
+    }
+
+    /**
+     * Return data for Twig templates that is common for all pages.
+     */
+    private function getCommonTwigData(Site $site): array
+    {
+        $data = [
+            'site' => $site->name,
+            'url' => $site->url
+        ];
 
         if ($site->lang) {
             $data['lang'] = $site->lang;
@@ -25,22 +89,32 @@ class Generator
             $data['description'] = $site->description;
         }
         if ($site->icon) {
-            // TODO
+            $data['icon'] = $site->icon;
         }
 
         $data['css'] = array_keys($site->css);
         $data['js'] = array_keys($site->js);
 
-        foreach ($site->pages as $pagename => $content) {
-            $pagedir = $outdir . $pagename . '/';
+        // Build menu
+        $menu = [];
+        foreach ($site->menu as $menupage) {
+            $page = $site->pages[$menupage];
+            $menu[$page->getLink(true)] = $page->name;
+        }
+        $data['menu'] = $menu;
 
-            if (!file_exists($pagedir)) {
-                if (!@mkdir($pagedir)) {
-                    exit_with_error("Unable to create directory $pagedir.");
-                }
+        return $data;
+    }
+
+    /**
+     * Create directory if it doesn't exist.
+     */
+    private function makeDir(string $dir): void
+    {
+        if (!file_exists($dir)) {
+            if (!@mkdir($dir)) {
+                exit_with_error("Unable to create directory $dir.");
             }
-
-            $html = $this->markdown->convertToHtml($content);
         }
     }
 }
