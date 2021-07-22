@@ -1,7 +1,7 @@
 <?php
 namespace Stagger;
 
-use League\CommonMark\EnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\Table\Table;
 
@@ -34,7 +34,7 @@ class CssClassProcessor
             $elemName = $this->getElementName($node);
 
             if ($elemName && array_key_exists($elemName, $this->classes)) {
-                $node->data['attributes']['class'] = $this->classes[$elemName];
+                $node->data->append('attributes/class', $this->classes[$elemName]);
             }
         }
     }

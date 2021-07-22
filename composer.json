@@ -9,8 +9,8 @@
             "homepage": "http://laihoconsulting.com/"
         }
     ],
-	"require" : {
-        "league/commonmark": "~1.6",
+	"require": {
+        "league/commonmark": "2.0.0-rc2",
         "symfony/yaml": "~5.3",
         "twig/twig": "~3.3"
 	},

@@ -48,7 +48,7 @@ $parser = new Stagger\Parser();
 $site = $parser->parse($sitename);
 
 // Initialize Markdown parser
-$markdownEnv = League\CommonMark\Environment::createCommonMarkEnvironment();
+$markdownEnv = League\CommonMark\Environment\Environment::createCommonMarkEnvironment();
 $markdownEnv->addExtension(new League\CommonMark\Extension\Table\TableExtension());
 $cssProcessor = new Stagger\CssClassProcessor($markdownEnv, $site->cssClasses);
 $markdownEnv->addEventListener(League\CommonMark\Event\DocumentParsedEvent::class, [$cssProcessor, 'onDocumentParsed']);
