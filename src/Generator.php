@@ -2,17 +2,20 @@
 namespace Stagger;
 
 use League\CommonMark\MarkdownConverter;
+use Twig\Environment;
 
 class Generator
 {
     private MarkdownConverter $markdown;
+    private Environment $twig;
 
-    public function __construct(MarkdownConverter $markdown)
+    public function __construct(MarkdownConverter $markdown, Environment $twig)
     {
         $this->markdown = $markdown;
+        $this->twig = $twig;
     }
 
-    public function generate(Site $site, Theme $theme): void
+    public function generate(Site $site): void
     {
         $outdir = OUTPUT_DIR . $site->id . '/';
 
@@ -60,7 +63,7 @@ class Generator
             $data['content'] = $this->markdown->convertToHtml($page->content);
 
             // Render HTML using Twig
-            $html = $theme->render('layout', $data);
+            $html = $this->twig->render('layout', $data);
 
             // Write it to file
             file_put_contents($pagedir . 'index.html', $html);

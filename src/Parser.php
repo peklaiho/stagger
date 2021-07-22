@@ -25,7 +25,7 @@ class Parser
         }
 
         // Check that required info is present
-        $required = ['name', 'url', 'theme'];
+        $required = ['name', 'url'];
         foreach ($required as $key) {
             if (!array_key_exists($key, $info)) {
                 exit_with_error("File site.yml does not contain required key $key.");
@@ -33,7 +33,7 @@ class Parser
         }
 
         // Create site object
-        $site = new Site($id, $info['name'], $info['url'], $info['theme']);
+        $site = new Site($id, $info['name'], $info['url']);
 
         // Optional info
         $site->description = $info['description'] ?? null;
@@ -52,6 +52,9 @@ class Parser
                 'data' => file_get_contents($iconfile)
             ];
         }
+
+        // Templates
+        $site->templates = $this->readTemplates($dir . 'templates/');
 
         // Styles and scripts
         $site->css = $this->readCssJs($dir . 'css/', $info['css'] ?? []);
@@ -78,6 +81,10 @@ class Parser
     {
         $files = [];
 
+        if (!file_exists($dir)) {
+            return $files;
+        }
+
         foreach ($filenames as $filename) {
             $fn = $dir . $filename;
             if (!is_readable($fn)) {
@@ -94,6 +101,10 @@ class Parser
     {
         $pages = [];
         $homepage = true;
+
+        if (!file_exists($dir)) {
+            return $pages;
+        }
 
         foreach ($pagenames as $id) {
             $pagedir = $dir . $id . '/';
@@ -159,5 +170,28 @@ class Parser
         }
 
         return $files;
+    }
+
+    private function readTemplates(string $dir): array
+    {
+        $templates = [];
+
+        if (is_readable($dir)) {
+            $files = glob($dir . '*.twig');
+            foreach ($files as $file) {
+                $pi = pathinfo($file);
+                $templates[$pi['filename']] = file_get_contents($file);
+            }
+        }
+
+        // Check required templates
+        $required = ['layout'];
+        foreach ($required as $req) {
+            if (!array_key_exists($req, $templates)) {
+                exit_with_error("Required template $req.twig missing.");
+            }
+        }
+
+        return $templates;
     }
 }
