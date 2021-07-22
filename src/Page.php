@@ -19,9 +19,8 @@ class Page
     }
 
     /**
-     * Data for Twig that is specific to this page.
-     * The $data argument contains the default data
-     * and you can override any values that you want.
+     * The $data argument contains the default data for the site
+     * and can be modified here to add page-specific values.
      */
     public function getTwigData(array $data): array
     {

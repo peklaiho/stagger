@@ -54,7 +54,7 @@ class Generator
             $this->makeDir($pagedir);
 
             // Data for Twig templates
-            $data = $page->getTwigData($this->getCommonTwigData($site));
+            $data = $page->getTwigData($site->getTwigData());
 
             // Render HTML using Twig
             $html = $this->twig->render('layout', $data);
@@ -67,40 +67,6 @@ class Generator
                 file_put_contents($pagedir . $fname, $fcontent);
             }
         }
-    }
-
-    /**
-     * Return data for Twig templates that is common for all pages.
-     */
-    private function getCommonTwigData(Site $site): array
-    {
-        $data = [
-            'site' => $site->name,
-            'url' => $site->url
-        ];
-
-        if ($site->lang) {
-            $data['lang'] = $site->lang;
-        }
-        if ($site->description) {
-            $data['description'] = $site->description;
-        }
-        if ($site->icon) {
-            $data['icon'] = $site->icon;
-        }
-
-        $data['css'] = array_keys($site->css);
-        $data['js'] = array_keys($site->js);
-
-        // Build menu
-        $menu = [];
-        foreach ($site->menu as $menupage) {
-            $page = $site->pages[$menupage];
-            $menu[$page->getLink(true)] = $page->name;
-        }
-        $data['menu'] = $menu;
-
-        return $data;
     }
 
     /**

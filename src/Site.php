@@ -19,27 +19,62 @@ use League\CommonMark\Node\Block\Paragraph;
 
 class Site
 {
+    // Required info
     public string $id;
     public string $name;
     public string $url;
 
+    // Optional metadata
     public ?string $description = null;
+    public ?string $author = null;
     public ?array $icon = null;
     public ?string $lang = null;
 
+    // Content
     public array $templates = [];
-
     public array $css = [];
     public array $js = [];
-
     public array $pages = [];
     public array $menu = [];
-
     public array $cssClasses = [];
 
     public function __construct(string $id)
     {
         $this->id = $id;
+    }
+
+    public function getTwigData(): array
+    {
+        $data = [
+            'site' => $this->name,
+            'url' => $this->url
+        ];
+
+        if ($this->description) {
+            $data['description'] = $this->description;
+        }
+        if ($this->author) {
+            $data['author'] = $this->author;
+        }
+        if ($this->icon) {
+            $data['icon'] = $this->icon;
+        }
+        if ($this->lang) {
+            $data['lang'] = $this->lang;
+        }
+
+        $data['css'] = array_keys($this->css);
+        $data['js'] = array_keys($this->js);
+
+        // Build menu
+        $menu = [];
+        foreach ($this->menu as $menupage) {
+            $page = $this->pages[$menupage];
+            $menu[$page->getLink(true)] = $page->name;
+        }
+        $data['menu'] = $menu;
+
+        return $data;
     }
 
     public function onPageParsed($event)

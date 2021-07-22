@@ -1,16 +1,8 @@
 header {
-	padding-top: 25px;
-	padding-bottom: 10px;
+    padding-top: 25px;
+    padding-bottom: 10px;
 }
 
-header a {
-	font-size: 1.2em !important;
-	color: #3b4351 !important;
-}
-
-header a:focus,
-header a:hover,
-header a:active,
-header a.active {
-  color: #302ecd !important;
+header .btn {
+    font-size: 1.2em;
 }
