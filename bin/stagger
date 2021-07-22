@@ -50,6 +50,7 @@ $site = $parser->parse($sitename);
 // Initialize Markdown parser
 $markdownEnv = League\CommonMark\Environment\Environment::createCommonMarkEnvironment();
 $markdownEnv->addExtension(new League\CommonMark\Extension\Table\TableExtension());
+$markdownEnv->addExtension(new League\CommonMark\Extension\FrontMatter\FrontMatterExtension());
 $cssProcessor = new Stagger\CssClassProcessor($markdownEnv, $site->cssClasses);
 $markdownEnv->addEventListener(League\CommonMark\Event\DocumentParsedEvent::class, [$cssProcessor, 'onDocumentParsed']);
 $markdownConv = new League\CommonMark\MarkdownConverter($markdownEnv);
