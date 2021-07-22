@@ -1,17 +1,14 @@
 <?php
 namespace Stagger;
 
-use League\CommonMark\MarkdownConverter;
 use Twig\Environment;
 
 class Generator
 {
-    private MarkdownConverter $markdown;
     private Environment $twig;
 
-    public function __construct(MarkdownConverter $markdown, Environment $twig)
+    public function __construct(Environment $twig)
     {
-        $this->markdown = $markdown;
         $this->twig = $twig;
     }
 
@@ -58,9 +55,6 @@ class Generator
 
             // Data for Twig templates
             $data = $page->getTwigData($this->getCommonTwigData($site));
-
-            // Render content using Markdown
-            $data['content'] = $this->markdown->convertToHtml($page->content);
 
             // Render HTML using Twig
             $html = $this->twig->render('layout', $data);

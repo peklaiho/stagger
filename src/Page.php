@@ -30,6 +30,7 @@ class Page
         $data['home'] = $this->homepage;
         $data['link'] = $this->getLink(true);
         $data['url'] =  $data['url'] . $this->getLink(false);
+        $data['content'] = $this->content;
 
         return $data;
     }

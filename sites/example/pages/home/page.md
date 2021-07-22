@@ -1,3 +1,7 @@
+---
+name: Home
+---
+
 # Example site
 
 This is the homepage for an example website generated with [Stagger](https://bitbucket.org/maddy83/stagger/).

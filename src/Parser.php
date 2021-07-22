@@ -1,15 +1,24 @@
 <?php
 namespace Stagger;
 
+use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
 use Symfony\Component\Yaml\Yaml;
 
 class Parser
 {
-    public function parse(string $id): Site
+    private MarkdownConverter $markdown;
+
+    public function __construct(MarkdownConverter $markdown)
     {
-        $dir = SITES_DIR . $id . '/';
+        $this->markdown = $markdown;
+    }
+
+    public function parse(Site $site): void
+    {
+        $dir = SITES_DIR . $site->id . '/';
         if (!is_readable($dir)) {
-            exit_with_error("Site $id not found or directory $dir is not readable.");
+            exit_with_error("Site not found or directory $dir is not readable.");
         }
 
         $sitefile = $dir . 'site.yml';
@@ -27,13 +36,12 @@ class Parser
         // Check that required info is present
         $required = ['name', 'url'];
         foreach ($required as $key) {
-            if (!array_key_exists($key, $info)) {
+            if (array_key_exists($key, $info)) {
+                $site->$key = $info[$key];
+            } else {
                 exit_with_error("File site.yml does not contain required key $key.");
             }
         }
-
-        // Create site object
-        $site = new Site($id, $info['name'], $info['url']);
 
         // Optional info
         $site->description = $info['description'] ?? null;
@@ -60,6 +68,9 @@ class Parser
         $site->css = $this->readCssJs($dir . 'css/', $info['css'] ?? []);
         $site->js = $this->readCssJs($dir . 'js/', $info['js'] ?? []);
 
+        // Css classes
+        $site->cssClasses = $info['classes'] ?? [];
+
         // Read pages
         $site->pages = $this->readPages($dir . 'pages/', $info['pages']);
         if (empty($site->pages)) {
@@ -73,11 +84,6 @@ class Parser
                 exit_with_error("Menu references page $menupage that does not exist.");
             }
         }
-
-        // Css classes
-        $site->cssClasses = $info['classes'] ?? [];
-
-        return $site;
     }
 
     private function readCssJs(string $dir, array $filenames): array
@@ -103,7 +109,6 @@ class Parser
     private function readPages(string $dir, array $pagenames): array
     {
         $pages = [];
-        $homepage = true;
 
         if (!file_exists($dir)) {
             return $pages;
@@ -111,21 +116,20 @@ class Parser
 
         foreach ($pagenames as $id) {
             $pagedir = $dir . $id . '/';
-            $infofile = $pagedir . 'page.yml';
-            $contfile = $pagedir . 'page.md';
+            $pagefile = $pagedir . 'page.md';
 
-            if (!is_readable($infofile)) {
-                exit_with_error("File page.yml for page $id is not readable.");
-            } elseif (!is_readable($contfile)) {
-                exit_with_error("File page.md for page $id is not readable.");
+            if (!is_readable($pagefile)) {
+                exit_with_error("File page.md for page '$id' is not readable.");
             }
 
-            // Parse page.yml
-            try {
-                $info = Yaml::parse(file_get_contents($infofile));
-            } catch (\Exception $ex) {
-                exit_with_error("Unable to parse page.yml: " . $ex->getMessage());
+            $pagedata = $this->markdown->convertToHtml(file_get_contents($pagefile));
+
+            if (!($pagedata instanceof RenderedContentWithFrontMatter)) {
+                exit_with_error("File page.md for page '$id' does not include front matter.");
             }
+
+            $info = $pagedata->getFrontMatter();
+            $content = $pagedata->getContent();
 
             // Check that required info is present
             $required = ['name'];
@@ -138,14 +142,13 @@ class Parser
             $page = new Page(
                 $id,
                 $info['name'],
-                file_get_contents($contfile),
-                $homepage
+                $content,
+                false
             );
 
             $page->files = $this->readPageFiles($pagedir);
 
             $pages[$id] = $page;
-            $homepage = false;
         }
 
         return $pages;

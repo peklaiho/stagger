@@ -4,9 +4,6 @@ name: Example site
 # Full URL of the site with trailing slash (required)
 url: http://example.com/
 
-# Theme to use for HTML templates (required)
-theme: default
-
 # Meta description (optional)
 description: Description of an example site made with Stagger.
 
@@ -42,7 +39,7 @@ menu: [
   blog
 ]
 
-# CSS-classes, automatically added for given HTML elements
+# CSS-classes for given HTML elements
 classes: {
   table: table
 }

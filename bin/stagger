@@ -43,17 +43,18 @@ if (!$sitename) {
     exit_with_error('Give site name as argument.');
 }
 
-// Read site to memory
-$parser = new Stagger\Parser();
-$site = $parser->parse($sitename);
+$site = new Stagger\Site($sitename);
 
 // Initialize Markdown parser
 $markdownEnv = League\CommonMark\Environment\Environment::createCommonMarkEnvironment();
 $markdownEnv->addExtension(new League\CommonMark\Extension\Table\TableExtension());
 $markdownEnv->addExtension(new League\CommonMark\Extension\FrontMatter\FrontMatterExtension());
-$cssProcessor = new Stagger\CssClassProcessor($markdownEnv, $site->cssClasses);
-$markdownEnv->addEventListener(League\CommonMark\Event\DocumentParsedEvent::class, [$cssProcessor, 'onDocumentParsed']);
+$markdownEnv->addEventListener(League\CommonMark\Event\DocumentParsedEvent::class, [$site, 'onPageParsed']);
 $markdownConv = new League\CommonMark\MarkdownConverter($markdownEnv);
+
+// Parse the site
+$parser = new Stagger\Parser($markdownConv);
+$parser->parse($site);
 
 // Initialize Twig
 $twigLoader = new Twig\Loader\ArrayLoader($site->templates);
@@ -62,7 +63,7 @@ $twigEnv = new Twig\Environment($twigLoader, [
 ]);
 
 // Process site and write it to output directory
-$generator = new Stagger\Generator($markdownConv, $twigEnv);
+$generator = new Stagger\Generator($twigEnv);
 $generator->generate($site);
 
 print("Generated site $sitename in " . OUTPUT_DIR . "$sitename." . PHP_EOL);
