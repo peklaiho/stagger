@@ -53,8 +53,11 @@ $markdownEnv->addEventListener(League\CommonMark\Event\DocumentParsedEvent::clas
 $markdownConv = new League\CommonMark\MarkdownConverter($markdownEnv);
 
 // Parse the site
-$parser = new Stagger\Parser($markdownConv);
+$reader = new Stagger\Reader($markdownConv);
+$parser = new Stagger\Parser($reader);
 $parser->parse($site);
+
+// Validate site
 
 // Initialize Twig
 $twigLoader = new Twig\Loader\ArrayLoader($site->templates);

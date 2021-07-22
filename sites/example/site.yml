@@ -25,13 +25,6 @@ js: [
   app.js
 ]
 
-# Pages, first is automatically the home page
-pages: [
-  home,
-  about,
-  blog
-]
-
 # Menu
 menu: [
   home,

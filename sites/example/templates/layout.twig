@@ -8,9 +8,9 @@
     <meta charset="utf-8" />
     <title>
     {% if home %}
-        {{ site }}
+        {{ site_title }}
     {% else %}
-        {{ name }} | {{ site }}
+        {{ page_title }} | {{ site_title }}
     {% endif %}
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -39,11 +39,11 @@
                     <section class="navbar-section">
                     </section>
                     <section class="navbar-section">
-                    {% for mlink, mname in menu %}
-                    {% if link == mlink %}
-                    <a href="{{ mlink }}" class="btn btn-link active">{{ mname }}</a>
+                    {% for mpath, mname in menu %}
+                    {% if path == mpath %}
+                    <a href="{{ mpath }}" class="btn btn-link active">{{ mname }}</a>
                     {% else %}
-                    <a href="{{ mlink }}" class="btn btn-link">{{ mname }}</a>
+                    <a href="{{ mpath }}" class="btn btn-link">{{ mname }}</a>
                     {% endif %}
                     {% endfor %}
                     </section>

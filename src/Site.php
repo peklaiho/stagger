@@ -20,9 +20,9 @@ use League\CommonMark\Node\Block\Paragraph;
 class Site
 {
     // Required info
-    public string $id;
-    public string $name;
-    public string $url;
+    public ?string $name = null;
+    public ?string $title = null;
+    public ?string $url = null;
 
     // Optional metadata
     public ?string $description = null;
@@ -38,15 +38,15 @@ class Site
     public array $menu = [];
     public array $cssClasses = [];
 
-    public function __construct(string $id)
+    public function __construct(string $name)
     {
-        $this->id = $id;
+        $this->name = $name;
     }
 
     public function getTwigData(): array
     {
         $data = [
-            'site' => $this->name,
+            'site_title' => $this->title,
             'url' => $this->url
         ];
 
@@ -70,7 +70,7 @@ class Site
         $menu = [];
         foreach ($this->menu as $menupage) {
             $page = $this->pages[$menupage];
-            $menu[$page->getLink(true)] = $page->name;
+            $menu[$page->getPath(true)] = $page->title;
         }
         $data['menu'] = $menu;
 

@@ -1,24 +1,22 @@
 <?php
 namespace Stagger;
 
-use League\CommonMark\MarkdownConverter;
-use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
 use Symfony\Component\Yaml\Yaml;
 
 class Parser
 {
-    private MarkdownConverter $markdown;
+    private Reader $reader;
 
-    public function __construct(MarkdownConverter $markdown)
+    public function __construct(Reader $reader)
     {
-        $this->markdown = $markdown;
+        $this->reader = $reader;
     }
 
     public function parse(Site $site): void
     {
         $dir = SITES_DIR . $site->id . '/';
         if (!is_readable($dir)) {
-            exit_with_error("Site not found or directory $dir is not readable.");
+            exit_with_error("Site not found or directory is not readable.");
         }
 
         $sitefile = $dir . 'site.yml';
@@ -33,18 +31,13 @@ class Parser
             exit_with_error("Unable to parse site.yml: " . $ex->getMessage());
         }
 
-        // Check that required info is present
-        $required = ['name', 'url'];
-        foreach ($required as $key) {
-            if (array_key_exists($key, $info)) {
-                $site->$key = $info[$key];
-            } else {
-                exit_with_error("File site.yml does not contain required key $key.");
-            }
-        }
+        // Required fields
+        $site->title = $info['title'] ?? null;
+        $site->url = $info['url'] ?? null;
 
-        // Optional info
+        // Optional metadata
         $site->description = $info['description'] ?? null;
+        $site->author = $info['author'] ?? null;
         $site->lang = $info['lang'] ?? null;
 
         // Favicon
@@ -62,28 +55,20 @@ class Parser
         }
 
         // Templates
-        $site->templates = $this->readTemplates($dir . 'templates/');
+        $site->templates = $this->reader->readDirectory($dir . 'templates/');
 
         // Styles and scripts
-        $site->css = $this->readCssJs($dir . 'css/', $info['css'] ?? []);
-        $site->js = $this->readCssJs($dir . 'js/', $info['js'] ?? []);
+        $site->css = $this->reader->readFiles($dir . 'css/', $info['css'] ?? []);
+        $site->js = $this->reader->readFiles($dir . 'js/', $info['js'] ?? []);
 
-        // Css classes
+        // Css classes (before pages)
         $site->cssClasses = $info['classes'] ?? [];
 
         // Read pages
-        $site->pages = $this->readPages($dir . 'pages/', $info['pages']);
-        if (empty($site->pages)) {
-            exit_with_error("No pages found, at least one page is required.");
-        }
+        $site->pages = $this->reader->readDirectory($dir . 'pages/');
 
         // Read menu
         $site->menu = $info['menu'] ?? [];
-        foreach ($site->menu as $menupage) {
-            if (!array_key_exists($menupage, $site->pages)) {
-                exit_with_error("Menu references page $menupage that does not exist.");
-            }
-        }
     }
 
     private function readCssJs(string $dir, array $filenames): array
@@ -130,14 +115,6 @@ class Parser
 
             $info = $pagedata->getFrontMatter();
             $content = $pagedata->getContent();
-
-            // Check that required info is present
-            $required = ['name'];
-            foreach ($required as $key) {
-                if (!array_key_exists($key, $info)) {
-                    exit_with_error("File page.yml does not contain required key $key.");
-                }
-            }
 
             $page = new Page(
                 $id,

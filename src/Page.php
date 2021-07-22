@@ -1,47 +1,65 @@
 <?php
 namespace Stagger;
 
-class Page
+class Page extends File
 {
-    public string $id;
-    public string $name;
-    public string $content;
-    public bool $homepage;
+    public ?string $title = null;
+    public bool $home = false;
 
-    public array $files = [];
+    public ?string $description = null;
+    public ?string $author = null;
+    public ?string $created = null;
+    public ?string $edited = null;
 
-    public function __construct(string $id, string $name, string $content, bool $homepage)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->content = $content;
-        $this->homepage = $homepage;
-    }
+    public ?Page $parent = null;
+    public array $children = [];
 
     /**
      * The $data argument contains the default data for the site
      * and can be modified here to add page-specific values.
      */
-    public function getTwigData(array $data): array
+    public function getTwigData(array $sitedata): array
     {
-        $data['id'] = $this->id;
-        $data['name'] = $this->name;
-        $data['home'] = $this->homepage;
-        $data['link'] = $this->getLink(true);
-        $data['url'] =  $data['url'] . $this->getLink(false);
-        $data['content'] = $this->content;
+        $data = parent::getTwigData($sitedata);
+
+        $data['page_title'] = $this->title;
+        $data['home'] = $this->home;
+
+        if ($this->description) {
+            $data['description'] = $this->description;
+        }
+        if ($this->author) {
+            $data['author'] = $this->author;
+        }
+        if ($this->created) {
+            $data['created'] = $this->created;
+        }
+        if ($this->edited) {
+            $data['edited'] = $this->edited;
+        }
+
+        $data['path'] = $this->getPath(true);
+        $data['url'] = $sitedata['url'] . $this->getPath(false);
+
+        $data['children'] = array_map(function ($c) use ($sitedata) {
+            return $c->getTwigData($sitedata);
+        }, $this->children);
 
         return $data;
     }
 
-    public function getLink(bool $includeRootSlash): string
+    public function getPath(bool $includeLeadingSlash): string
     {
-        $link = $includeRootSlash ? '/' : '';
-
-        if (!$this->homepage) {
-            $link .= $this->id . '/';
+        if ($this->parent) {
+            $path = $this->parent->getPath($includeLeadingSlash);
+        } else {
+            $path = $includeRootSlash ? '/' : '';
         }
 
-        return $link;
+        if (!$this->home) {
+            $path .= $this->id . '/';
+        }
+
+        return $path;
     }
 }
