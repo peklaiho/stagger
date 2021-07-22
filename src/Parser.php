@@ -74,6 +74,9 @@ class Parser
             }
         }
 
+        // Css classes
+        $site->cssClasses = $info['classes'] ?? [];
+
         return $site;
     }
 

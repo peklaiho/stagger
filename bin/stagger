@@ -50,8 +50,8 @@ $site = $parser->parse($sitename);
 // Initialize Markdown parser
 $markdownEnv = League\CommonMark\Environment::createCommonMarkEnvironment();
 $markdownEnv->addExtension(new League\CommonMark\Extension\Table\TableExtension());
-$markdownPros = new Stagger\MarkdownProcessor($markdownEnv);
-$markdownEnv->addEventListener(League\CommonMark\Event\DocumentParsedEvent::class, [$markdownPros, 'onDocumentParsed']);
+$cssProcessor = new Stagger\CssClassProcessor($markdownEnv, $site->cssClasses);
+$markdownEnv->addEventListener(League\CommonMark\Event\DocumentParsedEvent::class, [$cssProcessor, 'onDocumentParsed']);
 $markdownConv = new League\CommonMark\MarkdownConverter($markdownEnv);
 
 // Initialize Twig

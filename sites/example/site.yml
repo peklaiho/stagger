@@ -41,3 +41,8 @@ menu: [
   about,
   blog
 ]
+
+# CSS-classes, automatically added for given HTML elements
+classes: {
+  table: table
+}

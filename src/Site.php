@@ -19,6 +19,8 @@ class Site
     public array $pages = [];
     public array $menu = [];
 
+    public array $cssClasses = [];
+
     public function __construct(string $id, string $name, string $url)
     {
         $this->id = $id;
