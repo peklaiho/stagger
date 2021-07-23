@@ -40,6 +40,15 @@ class Validator
 			exit_with_error('Site should have exactly 1 home page.');
 		}
 
+		// Check required templates
+		$templates = array_keys($site->getTwigTemplates());
+		$reqTemplates = ['layout'];
+		foreach ($reqTemplates as $req) {
+			if (!in_array($req, $templates)) {
+				exit_with_error('Required template is missing: ' . $req);
+			}
+		}
+
 		// Validate pages recursively
 		$this->validatePages($site->pages);
 	}
