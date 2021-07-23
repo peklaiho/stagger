@@ -8,6 +8,8 @@ The author of this example website is a fictional character who does not exist i
 
 For basic formatting, *this text* should be in italic and **this text** should be in bold.
 
+Keybindings like <kbd>C-k</kbd> or <kbd>C-M-a</kbd> are displayed like this.
+
 > This is a blockquote from some famous historical figure.
 
 ## Lists
