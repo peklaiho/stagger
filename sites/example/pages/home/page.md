@@ -1,5 +1,6 @@
 ---
-name: Home
+title: Home
+home: true
 ---
 
 # Example site

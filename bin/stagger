@@ -1,6 +1,10 @@
 #!/usr/bin/env php
 <?php
 
+function show_info($txt) {
+    print($txt . PHP_EOL);
+}
+
 function exit_with_error($error) {
     print('Error: ' . $error . PHP_EOL);
     exit(1);
@@ -60,7 +64,7 @@ $parser->parse($site);
 // Validate site
 
 // Initialize Twig
-$twigLoader = new Twig\Loader\ArrayLoader($site->templates);
+$twigLoader = new Twig\Loader\ArrayLoader($site->getTwigTemplates());
 $twigEnv = new Twig\Environment($twigLoader, [
     'autoescape' => false
 ]);
@@ -69,4 +73,4 @@ $twigEnv = new Twig\Environment($twigLoader, [
 $generator = new Stagger\Generator($twigEnv);
 $generator->generate($site);
 
-print("Generated site $sitename in " . OUTPUT_DIR . "$sitename." . PHP_EOL);
+show_info("Generated site $sitename in " . OUTPUT_DIR . "$sitename.");

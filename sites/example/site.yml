@@ -1,5 +1,5 @@
 # Name of the site, used in title (required)
-name: Example site
+title: Example site
 
 # Full URL of the site with trailing slash (required)
 url: http://example.com/

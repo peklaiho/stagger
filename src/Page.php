@@ -13,6 +13,7 @@ class Page extends File
 
     public ?Page $parent = null;
     public array $children = [];
+    public array $files = [];
 
     /**
      * The $data argument contains the default data for the site
@@ -53,11 +54,11 @@ class Page extends File
         if ($this->parent) {
             $path = $this->parent->getPath($includeLeadingSlash);
         } else {
-            $path = $includeRootSlash ? '/' : '';
+            $path = $includeLeadingSlash ? '/' : '';
         }
 
         if (!$this->home) {
-            $path .= $this->id . '/';
+            $path .= $this->filename . '/';
         }
 
         return $path;

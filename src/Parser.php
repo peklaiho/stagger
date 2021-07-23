@@ -14,7 +14,9 @@ class Parser
 
     public function parse(Site $site): void
     {
-        $dir = SITES_DIR . $site->id . '/';
+        show_info('Parsing site: ' . $site->name);
+
+        $dir = SITES_DIR . $site->name . '/';
         if (!is_readable($dir)) {
             exit_with_error("Site not found or directory is not readable.");
         }
@@ -26,6 +28,7 @@ class Parser
 
         // Parse site.yml
         try {
+            show_info('Parsing file site.yml.');
             $info = Yaml::parse(file_get_contents($sitefile));
         } catch (\Exception $ex) {
             exit_with_error("Unable to parse site.yml: " . $ex->getMessage());
@@ -44,7 +47,7 @@ class Parser
         if (array_key_exists('icon', $info)) {
             $iconfile = $dir . $info['icon'];
             if (!is_readable($iconfile)) {
-                exit_with_error("File " . $info['icon'] . " is not readable.");
+                exit_with_error("Favicon is not readable.");
             }
 
             $site->icon = [

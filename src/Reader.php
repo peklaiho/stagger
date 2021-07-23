@@ -31,24 +31,31 @@ class Reader
         return $filtered;
     }
 
-    public function readDirectory(string $dir, ?Page $parent = null)
+    /**
+     * Read a directory recursively. This returns a Page object
+     * if the directory contains page.md or post.md. Otherwise
+     * it returns an array of all the contents as File objects.
+     */
+    public function readDirectory(string $dir)
     {
-        $results = [];
+        show_info("Reading directory: $dir");
 
         if (!is_readable($dir)) {
-            return $results;
+            return [];
         }
 
         // Page or Post?
         $page = null;
         if (is_readable($dir . self::PAGEFILE)) {
-            $page = new Page(self::PAGEFILE);
+            $pagefile = $dir . self::PAGEFILE;
+            $page = new Page(pathinfo($dir)['basename']);
         } elseif (is_readable($dir . self::POSTFILE)) {
-            $page = new Post(self::POSTFILE);
+            $pagefile = $dir . self::POSTFILE;
+            $page = new Post(pathinfo($dir)['basename']);
         }
 
         if ($page) {
-            $data = $this->markdown->convertToHtml(file_get_contents($page->filename));
+            $data = $this->markdown->convertToHtml(file_get_contents($pagefile));
 
             if ($data instanceof RenderedContentWithFrontMatter) {
                 $page->content = $data->getContent();
@@ -70,10 +77,6 @@ class Reader
                 $page->content = $data;
             }
 
-            if ($parent) {
-                $parent->addChild($page);
-            }
-
             foreach (glob($dir . '*') as $file) {
                 $basename = pathinfo($file)['basename'];
 
@@ -82,11 +85,44 @@ class Reader
                 }
 
                 if (is_dir($file)) {
-                    $this->readDirectory($dir . $basename . '/', $page);
+                    $child = $this->readDirectory($file . '/');
+
+                    if ($child instanceof Page) {
+                        $page->children[] = $child;
+                        $child->parent = $page;
+                    } else {
+                        // Subdirectory that is not a page, ignored for now.
+                        show_info("Ignoring directory: $file");
+                    }
                 } else {
-                    $page->addFile(new File($basename, file_get_contents($file)))
+                    show_info("Reading file $basename.");
+                    $page->files[] = new File($basename, file_get_contents($file));
                 }
             }
+
+            return $page;
+        } else {
+            // Not a page, return an array of files
+            $results = [];
+
+            foreach (glob($dir . '*') as $file) {
+                $basename = pathinfo($file)['basename'];
+
+                if (is_dir($file)) {
+                    $page = $this->readDirectory($file . '/');
+
+                    if ($page instanceof Page) {
+                        $results[] = $page;
+                    } else {
+                        // Subdirectory that is not a page, ignored for now.
+                        show_info("Ignoring directory: $file");
+                    }
+                } else {
+                    $results[] = new File($basename, file_get_contents($file));
+                }
+            }
+
+            return $results;
         }
     }
 }

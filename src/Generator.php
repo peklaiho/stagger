@@ -14,7 +14,7 @@ class Generator
 
     public function generate(Site $site): void
     {
-        $outdir = OUTPUT_DIR . $site->id . '/';
+        $outdir = OUTPUT_DIR . $site->name . '/';
 
         $this->makedir($outdir);
 
@@ -23,8 +23,8 @@ class Generator
             $cssdir = $outdir . 'css/';
             $this->makedir($cssdir);
 
-            foreach ($site->css as $fname => $fcontent) {
-                file_put_contents($cssdir . $fname, $fcontent);
+            foreach ($site->css as $file) {
+                file_put_contents($cssdir . $file->filename, $file->content);
             }
         }
 
@@ -33,8 +33,8 @@ class Generator
             $jsdir = $outdir . 'js/';
             $this->makedir($jsdir);
 
-            foreach ($site->js as $fname => $fcontent) {
-                file_put_contents($jsdir . $fname, $fcontent);
+            foreach ($site->js as $file) {
+                file_put_contents($jsdir . $file->filename, $file->content);
             }
         }
 
@@ -47,8 +47,8 @@ class Generator
         // Write pages
         foreach ($site->pages as $page) {
             $pagedir = $outdir;
-            if (!$page->homepage) {
-                $pagedir .= $page->id . '/';
+            if (!$page->home) {
+                $pagedir .= $page->filename . '/';
             }
 
             $this->makeDir($pagedir);
@@ -63,8 +63,8 @@ class Generator
             file_put_contents($pagedir . 'index.html', $html);
 
             // Write other files
-            foreach ($page->files as $fname => $fcontent) {
-                file_put_contents($pagedir . $fname, $fcontent);
+            foreach ($page->files as $file) {
+                file_put_contents($pagedir . $file->filename, $file->content);
             }
         }
     }
