@@ -61,7 +61,7 @@ $reader = new Stagger\Reader($markdownConv);
 $parser = new Stagger\Parser($reader);
 $parser->parse($site);
 
-// Validate site
+// TODO: Validate site
 
 // Initialize Twig
 $twigLoader = new Twig\Loader\ArrayLoader($site->getTwigTemplates());
@@ -73,4 +73,4 @@ $twigEnv = new Twig\Environment($twigLoader, [
 $generator = new Stagger\Generator($twigEnv);
 $generator->generate($site);
 
-show_info("Generated site $sitename in " . OUTPUT_DIR . "$sitename.");
+show_info("Generated site in " . OUTPUT_DIR . "$sitename.");

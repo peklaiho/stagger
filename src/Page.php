@@ -8,7 +8,7 @@ class Page extends File
 
     public ?string $description = null;
     public ?string $author = null;
-    public ?string $created = null;
+    public ?string $date = null;
     public ?string $edited = null;
 
     public ?Page $parent = null;
@@ -32,8 +32,8 @@ class Page extends File
         if ($this->author) {
             $data['author'] = $this->author;
         }
-        if ($this->created) {
-            $data['created'] = $this->created;
+        if ($this->date) {
+            $data['date'] = $this->date;
         }
         if ($this->edited) {
             $data['edited'] = $this->edited;

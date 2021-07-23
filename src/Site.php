@@ -29,7 +29,7 @@ class Site
     public ?string $description = null;
     public ?string $author = null;
     public ?string $lang = null;
-    public ?array $icon = null;
+    public ?File $icon = null;
 
     // Content
     public array $templates = [];

@@ -7,6 +7,9 @@ url: http://example.com/
 # Meta description (optional)
 description: Description of an example site made with Stagger.
 
+# Author (optional)
+author: Stagger
+
 # Favicon (optional)
 icon: favicon.png
 

@@ -18,8 +18,11 @@
     {% if description %}
     <meta name="description" content="{{ description }}" />
     {% endif %}
+    {% if author %}
+    <meta name="author" content="{{ author }}" />
+    {% endif %}
     {% if icon %}
-    <link rel="icon" type="{{ icon.type }}" href="/{{ icon.name }}" />
+    <link rel="icon" type="{{ icon.filetype }}" href="/{{ icon.filename }}" />
     {% endif %}
     {% if url %}
     <link rel="canonical" href="{{ url }}" />

@@ -40,32 +40,13 @@ class Generator
 
         // Write icon
         if ($site->icon) {
-            $iconfile = $outdir . $site->icon['name'];
-            file_put_contents($iconfile, $site->icon['data']);
+            $iconfile = $outdir . $site->icon->filename;
+            file_put_contents($iconfile, $site->icon->content);
         }
 
         // Write pages
         foreach ($site->pages as $page) {
-            $pagedir = $outdir;
-            if (!$page->home) {
-                $pagedir .= $page->filename . '/';
-            }
-
-            $this->makeDir($pagedir);
-
-            // Data for Twig templates
-            $data = $page->getTwigData($site->getTwigData());
-
-            // Render HTML using Twig
-            $html = $this->twig->render('layout', $data);
-
-            // Write it to file
-            file_put_contents($pagedir . 'index.html', $html);
-
-            // Write other files
-            foreach ($page->files as $file) {
-                file_put_contents($pagedir . $file->filename, $file->content);
-            }
+            $this->writePage($site, $page);
         }
     }
 
@@ -78,6 +59,36 @@ class Generator
             if (!@mkdir($dir)) {
                 exit_with_error("Unable to create directory $dir.");
             }
+        }
+    }
+
+    private function writePage(Site $site, Page $page): void
+    {
+        $outdir = OUTPUT_DIR . $site->name . '/';
+        $pagedir = $outdir . $page->getPath(false);
+
+        $pagetype = ($page instanceof Post) ? 'post' : 'page';
+        show_info("Writing $pagetype: $pagedir");
+
+        $this->makeDir($pagedir);
+
+        // Data for Twig templates
+        $data = $page->getTwigData($site->getTwigData());
+
+        // Render HTML using Twig
+        $html = $this->twig->render('layout', $data);
+
+        // Write it to file
+        file_put_contents($pagedir . 'index.html', $html);
+
+        // Write other files
+        foreach ($page->files as $file) {
+            file_put_contents($pagedir . $file->filename, $file->content);
+        }
+
+        // Write children
+        foreach ($page->children as $child) {
+            $this->writePage($site, $child);
         }
     }
 }

@@ -66,7 +66,7 @@ class Reader
 
                 $page->description = $info['description'] ?? null;
                 $page->author = $info['author'] ?? null;
-                $page->created = $info['created'] ?? null;
+                $page->date = $info['date'] ?? null;
                 $page->edited = $info['edited'] ?? null;
 
                 if ($page instanceof Post) {
@@ -95,7 +95,6 @@ class Reader
                         show_info("Ignoring directory: $file");
                     }
                 } else {
-                    show_info("Reading file $basename.");
                     $page->files[] = new File($basename, file_get_contents($file));
                 }
             }
