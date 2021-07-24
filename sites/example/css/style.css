@@ -1,32 +1,56 @@
 body {
-    padding-bottom: 4em;
+    padding-bottom: 2rem;
 }
 
 header {
-    padding-top: 1.5em;
-    padding-bottom: 1em;
+    padding-top: 1rem;
+    padding-bottom: 0.4rem;
 }
 
 header .btn {
-    font-size: 1.25em;
+    font-size: 1.1rem;
+}
+
+table {
+    margin-bottom: 1.2rem;
 }
 
 .divider {
-    margin-bottom: 1.5em;
+    margin-bottom: 1.2rem;
 }
 
-.post {
-    margin-bottom: 2em;
+/* Make the headings a little smaller than Spectre defaults */
+
+h1,
+.h1 {
+  font-size: 1.8rem;
 }
 
-.post-title {
-    margin-bottom: 0.1em;
+h2,
+.h2 {
+  font-size: 1.4rem;
 }
 
-.post-date {
-    font-size: 0.9em;
+h3,
+.h3 {
+  font-size: 1.2rem;
 }
 
-.post-preview {
-    margin-top: 1em;
+h4,
+.h4 {
+  font-size: 1.1rem;
+}
+
+/* Blog index */
+
+.post-index .post {
+    margin-bottom: 1.4rem;
+}
+
+.post-index .post-title {
+    margin-bottom: 0.1rem;
+}
+
+.post-index .post-preview {
+    margin-top: 0.8rem;
 }

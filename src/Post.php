@@ -17,7 +17,7 @@ class Post extends Page
             $data['tags'] = $this->tags;
         }
 
-        $data['preview'] = $data['content'];
+        $data['preview'] = $this->makePreview();
 
         return $data;
     }
@@ -25,5 +25,28 @@ class Post extends Page
     public function getType(): string
     {
         return 'post';
+    }
+
+    protected function makePreview(): string
+    {
+        $preview = [];
+
+        // Get everything inside paragraph tags
+        if (preg_match_all('/<p[^>]*>(.+)<\/p>/', $this->content, $matches)) {
+            foreach ($matches as $match) {
+                for ($i = 0; $i < count($matches[0]); $i++) {
+                    // Skip images
+                    if (substr($matches[1][$i], 0, 4) == '<img') {
+                        continue;
+                    }
+
+                    if (count($preview) < 2) {
+                        $preview[] = $matches[0][$i];
+                    }
+                }
+            }
+        }
+
+        return implode(PHP_EOL, $preview);
     }
 }

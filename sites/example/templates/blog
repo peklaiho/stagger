@@ -1,9 +1,11 @@
-{% for post in posts %}
-<div class="post">
+<div class="post-index">
+	{% for post in posts %}
+	<div class="post">
 
-<h2 class="post-title"><a href="{{ post.path }}">{{ post.page_title }}</a></h2>
-<div class="post-date">{{ post.pretty_date }}</div>
-<div class="post-preview">{{ post.preview }}</div>
+	<h2 class="post-title"><a href="{{ post.path }}">{{ post.page_title }}</a></h2>
+	<div class="post-date"><small>{{ post.pretty_date }}</small></div>
+	<div class="post-preview">{{ post.preview }}</div>
 
+	</div>
+	{% endfor %}
 </div>
-{% endfor %}
