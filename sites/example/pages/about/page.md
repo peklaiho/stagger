@@ -32,12 +32,20 @@ Interesting sports:
 
 Lets try to write some `inline code` with backticks.
 
-We can also write a codeblock using three backticks:
+This is a block of PHP code with syntax highlighting:
 
 ```php
 public function helloWorld() {
     echo "Hello, World\n";
 }
+```
+
+This is another block of source code with no syntax highlighting:
+
+```
+IF STAGGER IS AWESOME:
+    PRINT "HELLO, WORLD!"
+ENDIF
 ```
 
 ## Tables

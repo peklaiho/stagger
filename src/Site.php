@@ -80,13 +80,4 @@ class Site
 
         return $results;
     }
-
-    public function addCssClasses(string $content)
-    {
-        foreach ($this->cssClasses as $tag => $class) {
-            $content = str_replace("<$tag>", "<$tag class=\"$class\">", $content);
-        }
-
-        return $content;
-    }
 }

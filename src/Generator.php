@@ -6,10 +6,12 @@ use Twig\Environment;
 class Generator
 {
     private Environment $twig;
+    private Processor $processor;
 
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, Processor $processor)
     {
         $this->twig = $twig;
+        $this->processor = $processor;
     }
 
     public function generate(Site $site): void
@@ -101,8 +103,8 @@ class Generator
 
     private function renderAndWrite(Site $site, Page $page, string $filename, array $data): void
     {
-        // Add css classes to HTML
-        $data['content'] = $site->addCssClasses($data['content']);
+        // Add CSS classes and syntax highlighting to HTML
+        $data['content'] = $this->processor->process($site, $data['content']);
 
         // Render content based on page type
         $data['content'] = $this->twig->render($page->getType(), $data);

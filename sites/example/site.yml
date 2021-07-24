@@ -20,6 +20,7 @@ lang: en
 css: [
   spectre.css,
   spectre-icons.css,
+  hljs-default.css,
   style.css
 ]
 
@@ -37,6 +38,5 @@ menu: [
 
 # CSS-classes for given HTML elements
 classes: {
-  table: table,
-  pre: code
+  table: table
 }
