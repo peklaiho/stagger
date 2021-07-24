@@ -19,17 +19,15 @@ class Reader
 
     public function readFiles(string $dir, array $filenames): array
     {
-        $all = $this->readDirectory($dir);
+        $files = [];
 
-        $filtered = [];
-
-        foreach ($all as $file) {
-            if (in_array($file->filename, $filenames)) {
-                $filtered[] = $file;
+        foreach ($filenames as $filename) {
+            if (is_readable($dir . $filename)) {
+                $files[] = new File($filename, file_get_contents($dir . $filename));
             }
         }
 
-        return $filtered;
+        return $files;
     }
 
     /**
