@@ -1,2 +1,16 @@
-<!-- Post -->
-{{ content }}
+<div class="post post-{{ filename }}">
+    <h1 class="post-title">{{ page_title }}</h1>
+    <div class="post-meta">
+        <span class="post-date">
+            {{ pretty_date }}{% if pretty_edited %} &nbsp; &mdash; &nbsp; edited {{ pretty_edited }}{% endif %}
+        </span>
+        <span class="post-tags">
+        {% for tag in tags %}
+            <span class="post-tag"><a href="../tag-{{ tag }}.html" class="label label-rounded">{{ tag }}</a></span>
+        {% endfor %}
+        </span>
+    </div>
+    <div class="post-body">
+    {{ content }}
+    </div>
+</div>

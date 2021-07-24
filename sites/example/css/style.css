@@ -8,7 +8,7 @@ header {
 }
 
 header .btn {
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 table {
@@ -41,16 +41,36 @@ h4,
   font-size: 1.1rem;
 }
 
-/* Blog index */
+/* Blog */
 
-.post-index .post {
+.blog .preview {
     margin-bottom: 1.4rem;
 }
 
-.post-index .post-title {
-    margin-bottom: 0.1rem;
+.blog .preview-title,
+.post-title {
+    margin-bottom: 0.3rem;
 }
 
-.post-index .post-preview {
+.blog .preview-body {
     margin-top: 0.8rem;
+}
+
+.post-body {
+    margin-top: 1.2rem;
+}
+
+.preview-meta,
+.post-meta {
+    font-size: 80%;
+}
+
+.preview-tags,
+.post-tags {
+    margin-left: 0.6rem;
+}
+
+.preview-tag,
+.post-tag {
+    margin-left: 0.2rem;
 }

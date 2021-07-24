@@ -1,11 +1,18 @@
-<div class="post-index">
-	{% for post in posts %}
-	<div class="post">
-
-	<h2 class="post-title"><a href="{{ post.path }}">{{ post.page_title }}</a></h2>
-	<div class="post-date"><small>{{ post.pretty_date }}</small></div>
-	<div class="post-preview">{{ post.preview }}</div>
-
-	</div>
-	{% endfor %}
+<div class="blog">
+    {% for post in posts %}
+    <div class="preview">
+        <h2 class="preview-title"><a href="{{ post.path }}">{{ post.page_title }}</a></h2>
+        <div class="preview-meta">
+            <span class="preview-date">
+                {{ post.pretty_date }}
+            </span>
+            <span class="preview-tags">
+            {% for tag in post.tags %}
+                <span class="preview-tag"><a href="tag-{{ tag }}.html" class="label label-rounded">{{ tag }}</a></span>
+            {% endfor %}
+            </span>
+        </div>
+        <div class="preview-body">{{ post.preview }}</div>
+    </div>
+    {% endfor %}
 </div>
