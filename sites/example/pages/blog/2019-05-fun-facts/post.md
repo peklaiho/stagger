@@ -1,7 +1,7 @@
 ---
 title: Fun Facts
 date: "2019-05-30"
-tags: [fun, facts]
+tags: [fun, facts, list]
 ---
 
 Aliquam pretium egestas nulla non facilisis. Vivamus in pretium diam. Aenean hendrerit vel quam non euismod. Cras ultrices vehicula elit nec tincidunt. Donec pellentesque, mi id dictum lobortis, arcu dolor volutpat risus, et mattis est ligula ut velit. Curabitur interdum porta mollis.

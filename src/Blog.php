@@ -9,6 +9,8 @@ class Blog extends Page
 
         $data['posts'] = $this->getTwigDataForPosts($sitedata);
 
+        $data['tags'] = $this->getChildTags();
+
         return $data;
     }
 

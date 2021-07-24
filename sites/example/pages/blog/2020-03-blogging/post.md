@@ -1,7 +1,7 @@
 ---
 title: Blogging is Fun
 date: "2020-03-15"
-tags: [blog, fun]
+tags: [blog, fun, languages]
 ---
 
 Donec in eros sit amet nisi vehicula luctus. Donec eget nulla quis lacus convallis commodo vitae non elit. Quisque blandit in libero vel volutpat. Vestibulum euismod vitae orci et vehicula. Mauris quis diam in est congue cursus.

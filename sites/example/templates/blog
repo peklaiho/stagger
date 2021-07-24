@@ -1,18 +1,32 @@
 <div class="blog">
-    {% for post in posts %}
-    <div class="preview">
-        <h2 class="preview-title"><a href="{{ post.path }}">{{ post.page_title }}</a></h2>
-        <div class="preview-meta">
-            <span class="preview-date">
-                {{ post.pretty_date }}
-            </span>
-            <span class="preview-tags">
-            {% for tag in post.tags %}
-                <span class="preview-tag"><a href="tag-{{ tag }}.html" class="label label-rounded">{{ tag }}</a></span>
+    <div class="columns">
+        <div class="column col-12 show-xs blog-tags-top">
+            {% for tag in tags %}
+                <span class="blog-tag-top"><a href="tag-{{ tag }}.html" class="label label-rounded">{{ tag }}</a></span>
             {% endfor %}
-            </span>
         </div>
-        <div class="preview-body">{{ post.preview }}</div>
+        <div class="column col-9 col-xs-12 blog-previews">
+            {% for post in posts %}
+            <div class="preview">
+                <h2 class="preview-title"><a href="{{ post.path }}">{{ post.page_title }}</a></h2>
+                <div class="preview-meta">
+                    <span class="preview-date">
+                        {{ post.pretty_date }}
+                    </span>
+                    <span class="preview-tags">
+                    {% for tag in post.tags %}
+                        <span class="preview-tag"><a href="tag-{{ tag }}.html" class="label label-rounded">{{ tag }}</a></span>
+                    {% endfor %}
+                    </span>
+                </div>
+                <div class="preview-body">{{ post.preview }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="column col-3 hide-xs text-right blog-tags-side">
+            {% for tag in tags %}
+                <div class="blog-tag-side"><a href="tag-{{ tag }}.html" class="label label-rounded">{{ tag }}</a></div>
+            {% endfor %}
+        </div>
     </div>
-    {% endfor %}
 </div>
