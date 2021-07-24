@@ -53,7 +53,6 @@ $site = new Stagger\Site($sitename);
 $markdownEnv = League\CommonMark\Environment\Environment::createCommonMarkEnvironment();
 $markdownEnv->addExtension(new League\CommonMark\Extension\Table\TableExtension());
 $markdownEnv->addExtension(new League\CommonMark\Extension\FrontMatter\FrontMatterExtension());
-$markdownEnv->addEventListener(League\CommonMark\Event\DocumentParsedEvent::class, [$site, 'onPageParsed']);
 $markdownConv = new League\CommonMark\MarkdownConverter($markdownEnv);
 
 // Parse the site

@@ -75,7 +75,7 @@ class Generator
         $sitedata = $site->getTwigData();
         $data = $page->getTwigData($sitedata);
 
-        $this->renderAndWrite($page, $pagedir . 'index.html', $data);
+        $this->renderAndWrite($site, $page, $pagedir . 'index.html', $data);
 
         // For blog, we also generate pages for different tags
         if ($page instanceof Blog) {
@@ -84,7 +84,7 @@ class Generator
             foreach ($tags as $tag) {
                 $data['page_title'] = $page->title . ': ' . $tag;
                 $data['posts'] = $page->getTwigDataForPosts($sitedata, $tag);
-                $this->renderAndWrite($page, $pagedir . "tag-$tag.html", $data);
+                $this->renderAndWrite($site, $page, $pagedir . "tag-$tag.html", $data);
             }
         }
 
@@ -99,8 +99,11 @@ class Generator
         }
     }
 
-    private function renderAndWrite(Page $page, string $filename, array $data): void
+    private function renderAndWrite(Site $site, Page $page, string $filename, array $data): void
     {
+        // Add css classes to HTML
+        $data['content'] = $site->addCssClasses($data['content']);
+
         // Render content based on page type
         $data['content'] = $this->twig->render($page->getType(), $data);
 

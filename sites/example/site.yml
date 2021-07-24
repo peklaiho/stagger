@@ -37,5 +37,6 @@ menu: [
 
 # CSS-classes for given HTML elements
 classes: {
-  table: table
+  table: table,
+  pre: code
 }
