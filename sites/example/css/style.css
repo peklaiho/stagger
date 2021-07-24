@@ -11,6 +11,10 @@ header .btn {
     font-size: 1rem;
 }
 
+.btn.btn-link {
+    color: #3b4351;
+}
+
 table {
     margin-bottom: 1.2rem;
 }
