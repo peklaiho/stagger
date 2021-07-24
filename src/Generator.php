@@ -72,16 +72,21 @@ class Generator
         $this->makeDir($pagedir);
 
         // Data for Twig templates
-        $data = $page->getTwigData($site->getTwigData());
+        $sitedata = $site->getTwigData();
+        $data = $page->getTwigData($sitedata);
 
-        // Render content based on page type
-        $data['content'] = $this->twig->render($page->getType(), $data);
+        $this->renderAndWrite($page, $pagedir . 'index.html', $data);
 
-        // Render full layout of the site
-        $html = $this->twig->render('layout', $data);
+        // For blog, we also generate pages for different tags
+        if ($page instanceof Blog) {
+            $tags = $page->getChildTags();
 
-        // Write it to file
-        file_put_contents($pagedir . 'index.html', $html);
+            foreach ($tags as $tag) {
+                $data['page_title'] = $page->title . ': ' . $tag;
+                $data['posts'] = $page->getTwigDataForPosts($sitedata, $tag);
+                $this->renderAndWrite($page, $pagedir . "tag-$tag.html", $data);
+            }
+        }
 
         // Write other files
         foreach ($page->files as $file) {
@@ -92,5 +97,17 @@ class Generator
         foreach ($page->children as $child) {
             $this->writePage($site, $child);
         }
+    }
+
+    private function renderAndWrite(Page $page, string $filename, array $data): void
+    {
+        // Render content based on page type
+        $data['content'] = $this->twig->render($page->getType(), $data);
+
+        // Render full layout of the site
+        $html = $this->twig->render('layout', $data);
+
+        // Write it to file
+        file_put_contents($filename, $html);
     }
 }
