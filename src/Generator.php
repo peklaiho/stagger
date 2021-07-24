@@ -67,15 +67,17 @@ class Generator
         $outdir = OUTPUT_DIR . $site->name . '/';
         $pagedir = $outdir . $page->getPath(false);
 
-        $pagetype = ($page instanceof Post) ? 'post' : 'page';
-        show_info("Writing $pagetype: $pagedir");
+        show_info("Writing {$page->getType()}: $pagedir");
 
         $this->makeDir($pagedir);
 
         // Data for Twig templates
         $data = $page->getTwigData($site->getTwigData());
 
-        // Render HTML using Twig
+        // Render content based on page type
+        $data['content'] = $this->twig->render($page->getType(), $data);
+
+        // Render full layout of the site
         $html = $this->twig->render('layout', $data);
 
         // Write it to file

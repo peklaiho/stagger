@@ -6,6 +6,7 @@ use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatte
 
 class Reader
 {
+    const BLOGFILE = 'blog.md';
     const PAGEFILE = 'page.md';
     const POSTFILE = 'post.md';
 
@@ -44,9 +45,11 @@ class Reader
             return [];
         }
 
-        // Page or Post?
         $page = null;
-        if (is_readable($dir . self::PAGEFILE)) {
+        if (is_readable($dir . self::BLOGFILE)) {
+            $pagefile = $dir . self::BLOGFILE;
+            $page = new Blog(pathinfo($dir)['basename']);
+        } elseif (is_readable($dir . self::PAGEFILE)) {
             $pagefile = $dir . self::PAGEFILE;
             $page = new Page(pathinfo($dir)['basename']);
         } elseif (is_readable($dir . self::POSTFILE)) {

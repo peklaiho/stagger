@@ -17,6 +17,13 @@ class Post extends Page
             $data['tags'] = $this->tags;
         }
 
+        $data['preview'] = $data['content'];
+
         return $data;
+    }
+
+    public function getType(): string
+    {
+        return 'post';
     }
 }

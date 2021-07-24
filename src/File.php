@@ -27,4 +27,9 @@ class File
 
         return $data;
     }
+
+    public function getType(): string
+    {
+        return 'file';
+    }
 }

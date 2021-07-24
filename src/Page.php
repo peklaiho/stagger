@@ -34,17 +34,15 @@ class Page extends File
         }
         if ($this->date) {
             $data['date'] = $this->date;
+            $data['pretty_date'] = date('j F Y', strtotime($this->date));
         }
         if ($this->edited) {
             $data['edited'] = $this->edited;
+            $data['pretty_edited'] = date('j F Y', strtotime($this->edited));
         }
 
         $data['path'] = $this->getPath(true);
         $data['url'] = $sitedata['url'] . $this->getPath(false);
-
-        $data['children'] = array_map(function ($c) use ($sitedata) {
-            return $c->getTwigData($sitedata);
-        }, $this->children);
 
         return $data;
     }
@@ -62,5 +60,10 @@ class Page extends File
         }
 
         return $path;
+    }
+
+    public function getType(): string
+    {
+        return 'page';
     }
 }

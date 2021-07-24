@@ -42,7 +42,7 @@ class Validator
 
 		// Check required templates
 		$templates = array_keys($site->getTwigTemplates());
-		$reqTemplates = ['layout'];
+		$reqTemplates = ['blog', 'layout', 'page', 'post'];
 		foreach ($reqTemplates as $req) {
 			if (!in_array($req, $templates)) {
 				exit_with_error('Required template is missing: ' . $req);

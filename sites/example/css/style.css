@@ -1,12 +1,32 @@
 body {
-    padding-bottom: 70px;
+    padding-bottom: 4em;
 }
 
 header {
-    padding-top: 25px;
-    padding-bottom: 10px;
+    padding-top: 1.5em;
+    padding-bottom: 1em;
 }
 
 header .btn {
-    font-size: 1.2em;
+    font-size: 1.25em;
+}
+
+.divider {
+    margin-bottom: 1.5em;
+}
+
+.post {
+    margin-bottom: 2em;
+}
+
+.post-title {
+    margin-bottom: 0.1em;
+}
+
+.post-date {
+    font-size: 0.9em;
+}
+
+.post-preview {
+    margin-top: 1em;
 }
