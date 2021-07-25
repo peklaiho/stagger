@@ -95,3 +95,13 @@ h4,
     margin-bottom: 0.4rem;
     margin-right: 0.1rem;
 }
+
+@media (min-width: 481px) {
+    .post-footer-link-index {
+        text-align: center;
+    }
+
+    .post-footer-link-next {
+        text-align: right;
+    }
+}
