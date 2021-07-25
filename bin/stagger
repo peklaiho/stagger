@@ -47,6 +47,18 @@ if (!$sitename) {
     exit_with_error('Give site name as argument.');
 }
 
+// Clean sites from output directory
+if ($sitename == '--clean') {
+    show_info("Clean generated sites in output directory.");
+    foreach (glob(OUTPUT_DIR . '*') as $sitedir) {
+        if (is_dir($sitedir)) {
+            show_info("Delete: $sitedir");
+            shell_exec("rm -r $sitedir");
+        }
+    }
+    exit(0);
+}
+
 $site = new Stagger\Site($sitename);
 
 // Initialize Markdown parser
