@@ -21,7 +21,7 @@ meta: {
   # Open Graph (Facebook)
   og: true,
   # Twitter Card
-  twitter: true
+  twitter: false
 }
 
 # CSS-files

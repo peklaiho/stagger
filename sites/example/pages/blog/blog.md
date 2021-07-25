@@ -2,6 +2,4 @@
 title: Blog
 ---
 
-# Blog
-
-Example of a blog.
+None of this content will be visible, because our template 'blog' does not output page content. It will output a list of blog posts instead.

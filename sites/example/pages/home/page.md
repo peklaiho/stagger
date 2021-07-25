@@ -1,5 +1,8 @@
 ---
+# All pages require a title
 title: Home
+
+# Mark this page as the homepage
 home: true
 ---
 

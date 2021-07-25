@@ -1,7 +1,7 @@
 ---
 title: Blogging is Fun
 date: "2020-03-15"
-tags: [blog, fun, languages]
+tags: [blog, fun]
 ---
 
 Donec in eros sit amet nisi vehicula luctus. Donec eget nulla quis lacus convallis commodo vitae non elit. Quisque blandit in libero vel volutpat. Vestibulum euismod vitae orci et vehicula. Mauris quis diam in est congue cursus.
@@ -15,7 +15,7 @@ PHP       | Interpreted  | Definitely
 Lisp      | Interpreted  | Absolutely
 Go        | Compiled     | Obviously
 
-## More Lorem Ipsum
+## More Latin
 
 Quisque rhoncus, eros et egestas euismod, turpis nibh imperdiet neque, in tristique ante libero interdum lectus. Nulla ipsum tellus, efficitur vel lacus non, ultrices hendrerit dui. In laoreet dictum suscipit. Fusce maximus mi ipsum, vel viverra dolor feugiat eu. Donec a diam eget quam aliquam luctus.
 

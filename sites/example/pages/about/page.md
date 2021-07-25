@@ -2,11 +2,11 @@
 title: About
 ---
 
-# About me
+# About
 
 The author of this example website is a fictional character who does not exist in a physical form, but rather as bits and bytes in the cyberspace.
 
-For basic formatting, *this text* should be in italic and **this text** should be in bold.
+Lets test how our Markdown syntax is rendered into HTML for different elements. For basic formatting, *this text* should be in italic and **this text** should be in bold.
 
 Keybindings like <kbd>C-k</kbd> or <kbd>C-M-a</kbd> are displayed like this.
 
@@ -14,7 +14,7 @@ Keybindings like <kbd>C-k</kbd> or <kbd>C-M-a</kbd> are displayed like this.
 
 ## Lists
 
-Programming languages:
+Unordered list of rogramming languages:
 
 * C
 * C#
@@ -22,7 +22,7 @@ Programming languages:
 * PHP
 * JavaScript
 
-Interesting sports:
+Ordered list of interesting sports:
 
 1. Badminton
 2. Curling
@@ -40,7 +40,7 @@ public function helloWorld() {
 }
 ```
 
-This is another block of source code with no syntax highlighting:
+This is another block of generic source code with no syntax highlighting:
 
 ```
 IF STAGGER IS AWESOME:
@@ -50,7 +50,7 @@ ENDIF
 
 ## Tables
 
-Tech stocks:
+We also support tables:
 
 Company   | Symbol | Price
 ----------|--------|------
