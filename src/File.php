@@ -1,6 +1,9 @@
 <?php
 namespace Stagger;
 
+/**
+ * Class for normal files (not Blog, Page or Post).
+ */
 class File
 {
     public string $filename;
@@ -14,6 +17,9 @@ class File
         $this->content = $content;
     }
 
+    /**
+     * Return data used in rendering Twig templates.
+     */
     public function getTwigData(array $sitedata): array
     {
         $data = $sitedata;

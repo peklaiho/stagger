@@ -3,6 +3,9 @@ namespace Stagger;
 
 use Twig\Environment;
 
+/**
+ * Write the website to the output directory.
+ */
 class Generator
 {
     private Environment $twig;
@@ -14,6 +17,9 @@ class Generator
         $this->processor = $processor;
     }
 
+    /**
+     * Write the given site to the output directory.
+     */
     public function generate(Site $site): void
     {
         $outdir = OUTPUT_DIR . $site->name . '/';
@@ -64,6 +70,9 @@ class Generator
         }
     }
 
+    /**
+     * Write a Page to disk and recursively write its child pages also.
+     */
     private function writePage(Site $site, Page $page): void
     {
         $outdir = OUTPUT_DIR . $site->name . '/';
@@ -101,6 +110,9 @@ class Generator
         }
     }
 
+    /**
+     * Render a Page using Twig and write it to disk.
+     */
     private function renderAndWrite(Site $site, Page $page, string $filename, array $data): void
     {
         // Add CSS classes and syntax highlighting to HTML

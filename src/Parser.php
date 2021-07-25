@@ -3,6 +3,9 @@ namespace Stagger;
 
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Parser reads a website from disk into memory.
+ */
 class Parser
 {
     private Reader $reader;
@@ -12,6 +15,9 @@ class Parser
         $this->reader = $reader;
     }
 
+    /**
+     * Parse the given website.
+     */
     public function parse(Site $site): void
     {
         $dir = SITES_DIR . $site->name . '/';

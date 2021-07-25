@@ -10,12 +10,15 @@
             "homepage": "http://laihoconsulting.com/"
         }
     ],
-	"require": {
+    "support": {
+        "source": "https://bitbucket.org/maddy83/stagger/"
+    },
+    "require": {
         "league/commonmark": "2.0.0-rc2",
         "symfony/yaml": "~5.3",
         "twig/twig": "~3.3",
         "scrivo/highlight.php": "~9.18"
-	},
+    },
     "require-dev": {
 
     },

@@ -1,8 +1,14 @@
 <?php
 namespace Stagger;
 
+/**
+ * Index page for a blog. Lists the posts.
+ */
 class Blog extends Page
 {
+    /**
+     * Return data used in rendering Twig templates.
+     */
     public function getTwigData(array $sitedata): array
     {
         $data = parent::getTwigData($sitedata);
@@ -14,6 +20,9 @@ class Blog extends Page
         return $data;
     }
 
+    /**
+     * Return data for posts, to be used in rendering Twig templates.
+     */
     public function getTwigDataForPosts(array $sitedata, ?string $tag = null): array
     {
         $posts = $tag ? $this->getPostsWithTag($tag) : $this->children;
@@ -27,6 +36,9 @@ class Blog extends Page
         }, $posts);
     }
 
+    /**
+     * Return all posts which have the given tag.
+     */
     public function getPostsWithTag(string $tag): array
     {
         $posts = [];
@@ -40,6 +52,9 @@ class Blog extends Page
         return $posts;
     }
 
+    /**
+     * Return all tags that posts have.
+     */
     public function getChildTags(): array
     {
         $tags = [];

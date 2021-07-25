@@ -1,8 +1,16 @@
 <?php
 namespace Stagger;
 
+/**
+ * Validates a website after it has been read
+ * from the disk.
+ */
 class Validator
 {
+	/**
+	 * Validate the given site and exit if it
+	 * contains errors.
+	 */
 	public function validate(Site $site): void
 	{
 		show_info('Validating site.');
@@ -53,6 +61,9 @@ class Validator
 		$this->validatePages($site->pages);
 	}
 
+	/**
+	 * Validate the given pages recursively.
+	 */
 	private function validatePages(array $pages): void
 	{
 		foreach ($pages as $page) {

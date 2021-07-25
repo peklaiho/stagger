@@ -4,6 +4,10 @@ namespace Stagger;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
 
+/**
+ * Recursively reads directories from disk and converts
+ * them to Blog, Page or Post objects if applicable.
+ */
 class Reader
 {
     const BLOGFILE = 'blog.md';
@@ -17,6 +21,9 @@ class Reader
         $this->markdown = $markdown;
     }
 
+    /**
+     * Read the given files from the given directory.
+     */
     public function readFiles(string $dir, array $filenames): array
     {
         $files = [];
@@ -31,9 +38,10 @@ class Reader
     }
 
     /**
-     * Read a directory recursively. This returns a Page object
-     * if the directory contains page.md or post.md. Otherwise
-     * it returns an array of all the contents as File objects.
+     * Read a directory recursively and return a Blog, Page
+     * or Post object if the directory contains blog.md, page.md
+     * or post.md respectively. Otherwise return all the files
+     * in the directory as an array of File objects.
      */
     public function readDirectory(string $dir)
     {

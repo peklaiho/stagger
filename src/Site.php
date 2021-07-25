@@ -1,6 +1,9 @@
 <?php
 namespace Stagger;
 
+/**
+ * Class that represents a website.
+ */
 class Site
 {
     public string $name;
@@ -28,6 +31,9 @@ class Site
         $this->name = $name;
     }
 
+    /**
+     * Return data used in rendering Twig templates.
+     */
     public function getTwigData(): array
     {
         $data = [
@@ -70,6 +76,9 @@ class Site
         return $data;
     }
 
+    /**
+     * Return the Twig templates of the site.
+     */
     public function getTwigTemplates(): array
     {
         $results = [];

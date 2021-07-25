@@ -1,11 +1,17 @@
 <?php
 namespace Stagger;
 
+/**
+ * Class that represents a blog post.
+ */
 class Post extends Page
 {
     public ?string $category = null;
     public array $tags = [];
 
+    /**
+     * Return data used in rendering Twig templates.
+     */
     public function getTwigData(array $sitedata): array
     {
         $data = parent::getTwigData($sitedata);
@@ -27,6 +33,9 @@ class Post extends Page
         return 'post';
     }
 
+    /**
+     * Return a preview of the post that consists of first two paragraphs.
+     */
     protected function makePreview(): string
     {
         $preview = [];

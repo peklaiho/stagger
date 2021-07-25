@@ -1,6 +1,9 @@
 <?php
 namespace Stagger;
 
+/**
+ * Class that represents a regular page (not a blog post).
+ */
 class Page extends File
 {
     public ?string $title = null;
@@ -16,8 +19,7 @@ class Page extends File
     public array $files = [];
 
     /**
-     * The $data argument contains the default data for the site
-     * and can be modified here to add page-specific values.
+     * Return data used in rendering Twig templates.
      */
     public function getTwigData(array $sitedata): array
     {
@@ -47,6 +49,9 @@ class Page extends File
         return $data;
     }
 
+    /**
+     * Return the path of this page, to be used in links.
+     */
     public function getPath(bool $includeLeadingSlash): string
     {
         if ($this->parent) {

@@ -3,6 +3,10 @@ namespace Stagger;
 
 use Highlight\Highlighter;
 
+/**
+ * Class used to process the HTML code after it has been
+ * rendered from Markdown, but before it is written to disk.
+ */
 class Processor
 {
     private Highlighter $hl;
@@ -12,6 +16,10 @@ class Processor
         $this->hl = $hl;
     }
 
+    /**
+     * Process the given HTML code. Add CSS classes to
+     * elements and add syntax highlighting to code blocks.
+     */
     public function process(Site $site, string $html): string
     {
         // Add css classes
