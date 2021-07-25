@@ -48,6 +48,21 @@ class Validator
 			exit_with_error('Site should have exactly 1 home page.');
 		}
 
+		// Check menu pages are present
+		foreach ($site->menu as $menuitem) {
+			$found = false;
+			foreach ($site->pages as $page) {
+				if ($menuitem == $page->filename) {
+					$found = true;
+					break;
+				}
+			}
+
+			if (!$found) {
+				exit_with_error("Menu item '$menuitem' refers to page that does not exist.");
+			}
+		}
+
 		// Check required templates
 		$templates = array_keys($site->getTwigTemplates());
 		$reqTemplates = ['blog', 'layout', 'page', 'post'];
