@@ -31,9 +31,14 @@ if ($autoload) {
     exit_with_error('Unable to find Composer autoloader.');
 }
 
-// Directories, constants for now
+// Directories
 define('SITES_DIR', __DIR__ . '/../sites/');
-define('OUTPUT_DIR', __DIR__ . '/../output/');
+
+if (getenv('STAGGER_OUT')) {
+    define('OUTPUT_DIR', getenv('STAGGER_OUT'));
+} else {
+    define('OUTPUT_DIR', __DIR__ . '/../output/');
+}
 
 if (!is_readable(SITES_DIR)) {
     exit_with_error('Sites directory ' . SITES_DIR . ' is not readable.');
