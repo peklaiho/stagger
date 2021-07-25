@@ -1,6 +1,7 @@
 {
     "name": "maddy83/stagger",
     "description": "Stagger is a minimalist static website generator.",
+    "type": "project",
     "homepage": "https://bitbucket.org/maddy83/stagger/",
     "license": "MIT",
     "authors": [
