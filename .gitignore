@@ -1,2 +1,3 @@
-output/example/
+output/*
+!output/.gitkeep
 vendor/
