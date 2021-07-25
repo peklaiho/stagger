@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+$startTime = microtime(true);
+
 function show_info($txt) {
     print($txt . PHP_EOL);
 }
@@ -97,4 +99,4 @@ $processor = new Stagger\Processor($highlighter);
 $generator = new Stagger\Generator($twigEnv, $processor);
 $generator->generate($site);
 
-show_info(PHP_EOL . "Generated site in " . OUTPUT_DIR . "$sitename.");
+show_info(PHP_EOL . "Generated site in " . OUTPUT_DIR . "$sitename in " . number_format(microtime(true) - $startTime, 3) . "s.");
