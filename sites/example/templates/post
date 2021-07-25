@@ -13,4 +13,19 @@
     <div class="post-body">
     {{ content }}
     </div>
+    <div class="columns post-footer">
+        {% if previous %}
+        <div class="column col-4 col-xs-12 post-footer-link">
+            <a href="{{ previous.path }}">Previous: {{ previous.page_title }}</a>
+        </div>
+        {% endif %}
+        <div class="column col-4 col-xs-12 post-footer-link">
+            <a href="../">Index</a>
+        </div>
+        {% if next %}
+        <div class="column col-4 col-xs-12 post-footer-link">
+            <a href="{{ next.path }}">Next: {{ next.page_title }}</a>
+        </div>
+        {% endif %}
+    </div>
 </div>

@@ -12,7 +12,7 @@ class Post extends Page
     /**
      * Return data used in rendering Twig templates.
      */
-    public function getTwigData(array $sitedata): array
+    public function getTwigData(array $sitedata, bool $getPreviousNext = true): array
     {
         $data = parent::getTwigData($sitedata);
 
@@ -21,6 +21,18 @@ class Post extends Page
         }
         if ($this->tags) {
             $data['tags'] = $this->tags;
+        }
+
+        if ($getPreviousNext && $this->parent && $this->parent instanceof Blog) {
+            $previous = $this->parent->getPrevious($this);
+            if ($previous) {
+                $data['previous'] = $previous->getTwigData($sitedata, false);
+            }
+
+            $next = $this->parent->getNext($this);
+            if ($next) {
+                $data['next'] = $next->getTwigData($sitedata, false);
+            }
         }
 
         $data['preview'] = $this->makePreview();

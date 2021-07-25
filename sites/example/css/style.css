@@ -63,6 +63,7 @@ h4,
 
 .post-body {
     margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .preview-meta,
@@ -78,6 +79,10 @@ h4,
 .preview-tag,
 .post-tag {
     margin-left: 0.2rem;
+}
+
+.post-footer-link {
+    margin-bottom: 0.4rem;
 }
 
 .blog-tag-top {

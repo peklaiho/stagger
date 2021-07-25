@@ -25,11 +25,7 @@ class Blog extends Page
      */
     public function getTwigDataForPosts(array $sitedata, ?string $tag = null): array
     {
-        $posts = $tag ? $this->getPostsWithTag($tag) : $this->children;
-
-        usort($posts, function ($a, $b) {
-            return strtotime($b->date) - strtotime($a->date);
-        });
+        $posts = $this->getPosts($tag);
 
         return array_map(function ($post) use ($sitedata) {
             return $post->getTwigData($sitedata);
@@ -37,17 +33,23 @@ class Blog extends Page
     }
 
     /**
-     * Return all posts which have the given tag.
+     * Return all posts or posts which have the given tag.
      */
-    public function getPostsWithTag(string $tag): array
+    public function getPosts(?string $tag = null): array
     {
         $posts = [];
 
         foreach ($this->children as $post) {
-            if (in_array($tag, $post->tags)) {
-                $posts[] = $post;
+            if ($post instanceof Post) {
+                if (!$tag || in_array($tag, $post->tags)) {
+                    $posts[] = $post;
+                }
             }
         }
+
+        usort($posts, function ($a, $b) {
+            return strtotime($b->date) - strtotime($a->date);
+        });
 
         return $posts;
     }
@@ -69,6 +71,38 @@ class Blog extends Page
 
         sort($tags);
         return $tags;
+    }
+
+    /**
+     * Return the previous post before the given one.
+     */
+    public function getPrevious(Post $post): ?Post
+    {
+        $posts = $this->getPosts();
+
+        for ($i = 0; $i < count($posts) - 1; $i++) {
+            if ($posts[$i] === $post) {
+                return $posts[$i + 1];
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Return the next post after the given one.
+     */
+    public function getNext(Post $post): ?Post
+    {
+        $posts = $this->getPosts();
+
+        for ($i = 1; $i < count($posts); $i++) {
+            if ($posts[$i] === $post) {
+                return $posts[$i - 1];
+            }
+        }
+
+        return null;
     }
 
     public function getType(): string
