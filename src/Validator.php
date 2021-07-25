@@ -80,6 +80,21 @@ class Validator
 				}
 			}
 
+			// Make sure image is found if given
+			if ($page->image) {
+				$found = false;
+				foreach ($page->files as $file) {
+					if ($page->image == $file->filename) {
+						$found = true;
+						break;
+					}
+				}
+
+				if (!$found) {
+					exit_with_error("Page image '{$page->image}' does not exist.");
+				}
+			}
+
 			// Validate dates if given
 			if ($page->date && !$this->isValidDate($page->date)) {
 				exit_with_error("Date for page '{$page->filename}' is not valid: " . $page->date);

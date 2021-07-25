@@ -31,6 +31,8 @@ class File
             $data['filetype'] = $this->filetype;
         }
 
+        $data['pagetype'] = $this->getType();
+
         return $data;
     }
 

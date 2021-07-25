@@ -45,16 +45,16 @@ class Parser
         $site->description = $info['description'] ?? null;
         $site->author = $info['author'] ?? null;
         $site->lang = $info['lang'] ?? null;
+        $site->meta = $info['meta'] ?? [];
 
         // Favicon
         if (array_key_exists('icon', $info)) {
-            $iconfile = $dir . $info['icon'];
-            if (!is_readable($iconfile)) {
-                exit_with_error("Favicon is not readable.");
-            }
+            $site->icon = $this->reader->readSimpleFile($dir . $info['icon']);
+        }
 
-            $site->icon = new File($info['icon'], file_get_contents($iconfile));
-            $site->icon->filetype = mime_content_type($iconfile);
+        // Image
+        if (array_key_exists('image', $info)) {
+            $site->image = $this->reader->readSimpleFile($dir . $info['image']);
         }
 
         // Templates

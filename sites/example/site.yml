@@ -4,17 +4,25 @@ title: Example site
 # Full URL of the site with trailing slash (required)
 url: http://example.com/
 
-# Meta description (optional)
+# Meta description (optional but recommended)
 description: Description of an example site made with Stagger.
 
-# Author (optional)
-author: Stagger
-
-# Favicon (optional)
+# Favicon (optional but recommended)
 icon: favicon.png
 
-# Site language (optional)
+# Site language (optional but recommended)
 lang: en
+
+# Main image (optional, used in social media metadata)
+image: stagger.png
+
+# Additional metadata
+meta: {
+  # Open Graph (Facebook)
+  og: true,
+  # Twitter Card
+  twitter: true
+}
 
 # CSS-files
 css: [
@@ -36,7 +44,7 @@ menu: [
   blog
 ]
 
-# CSS-classes for given HTML elements
+# CSS-classes for HTML elements
 classes: {
   table: table
 }

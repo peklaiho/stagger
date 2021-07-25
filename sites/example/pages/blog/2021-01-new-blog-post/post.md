@@ -4,6 +4,7 @@ date: "2021-01-01"
 edited: "2021-01-08"
 category: Testing
 tags: [blog, testing, image]
+image: "hacker.png"
 
 # We can also override author and description
 author: Hacker Dude

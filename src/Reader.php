@@ -22,6 +22,23 @@ class Reader
     }
 
     /**
+     * Read a file into a File object.
+     */
+    public function readSimpleFile(string $filename): File
+    {
+        if (!is_readable($filename)) {
+            exit_with_error("File $filename is not readable.");
+        }
+
+        $basename = pathinfo($filename)['basename'];
+
+        $file = new File($basename, file_get_contents($filename));
+        $file->filetype = mime_content_type($filename);
+
+        return $file;
+    }
+
+    /**
      * Read the given files from the given directory.
      */
     public function readFiles(string $dir, array $filenames): array
@@ -77,6 +94,7 @@ class Reader
                 $page->author = $info['author'] ?? null;
                 $page->date = $info['date'] ?? null;
                 $page->edited = $info['edited'] ?? null;
+                $page->image = $info['image'] ?? null;
 
                 if ($page instanceof Post) {
                     $page->category = $info['category'] ?? null;

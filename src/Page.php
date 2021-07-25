@@ -13,6 +13,7 @@ class Page extends File
     public ?string $author = null;
     public ?string $date = null;
     public ?string $edited = null;
+    public ?string $image = null;
 
     public ?Page $parent = null;
     public array $children = [];
@@ -42,9 +43,12 @@ class Page extends File
             $data['edited'] = $this->edited;
             $data['pretty_edited'] = date('j F Y', strtotime($this->edited));
         }
+        if ($this->image) {
+            $data['page_image'] = $this->image;
+        }
 
         $data['path'] = $this->getPath(true);
-        $data['url'] = $sitedata['url'] . $this->getPath(false);
+        $data['page_url'] = $sitedata['site_url'] . $this->getPath(false);
 
         return $data;
     }

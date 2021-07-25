@@ -17,6 +17,8 @@ class Site
     public ?string $author = null;
     public ?string $lang = null;
     public ?File $icon = null;
+    public ?File $image = null;
+    public array $meta = [];
 
     // Content
     public array $templates = [];
@@ -38,7 +40,7 @@ class Site
     {
         $data = [
             'site_title' => $this->title,
-            'url' => $this->url
+            'site_url' => $this->url
         ];
 
         if ($this->description) {
@@ -53,6 +55,11 @@ class Site
         if ($this->icon) {
             $data['icon'] = $this->icon;
         }
+        if ($this->image) {
+            $data['site_image'] = $this->image;
+        }
+
+        $data['meta'] = $this->meta;
 
         $fn = function ($f) {
             return $f->filename;

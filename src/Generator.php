@@ -48,8 +48,12 @@ class Generator
 
         // Write icon
         if ($site->icon) {
-            $iconfile = $outdir . $site->icon->filename;
-            file_put_contents($iconfile, $site->icon->content);
+            file_put_contents($outdir . $site->icon->filename, $site->icon->content);
+        }
+
+        // Write image
+        if ($site->image) {
+            file_put_contents($outdir . $site->image->filename, $site->image->content);
         }
 
         // Write pages
