@@ -12,7 +12,7 @@ Stagger, by contrast, aims to be really simple with a minimal set of features an
 
 ## Example Website
 
-Stagger includes an example website located at *sites/example* which shows the structure of a website with some example pages and blog posts. There is only one configuration file, *site.yml*, located in the root directory. Pages are located in the *pages* directory with each page in their separate subdirectory. If the subdirectory contains *blog.md*, *page.md* or *post.md* it will be recognized as blog index, normal page, or a blog post respectively.
+Stagger includes an example website located at **sites/example** which shows the structure of a website with some example pages and blog posts. There is only one configuration file, **site.yml**, located in the root directory. Pages are located in the **pages** directory with each page in their separate subdirectory. If the subdirectory contains **blog.md**, **page.md** or **post.md** it will be recognized as blog index, normal page, or a blog post respectively.
 
 The example website uses [Spectre.css](https://picturepan2.github.io/spectre/). It gives some sane defaults for CSS styles and is a good starting point. Feel free to use it or not.
 
@@ -46,14 +46,14 @@ You can generate the example website like this:
     ...
     Generated site in /home/pekka/mysite/bin/../output/example.
 
-The finished website is located in *output/example*. You can use the PHP built-in web server to view it:
+The finished website is located in **output/example**. You can use the PHP built-in web server to view it:
 
     $ php -S 127.0.0.1:8000 -t output/example/
     [Sun Jul 25 12:20:26 2021] PHP 8.0.8 Development Server (http://127.0.0.1:8000) started
 
 Navigate your web browser to *http://127.0.0.1:8000*.
 
-That's all there is to it! Compare the files in *sites/example* to *output/example* to understand how the tool operates. It should be fairly obvious for the most part.
+That's all there is to it! Compare the files in **sites/example** to **output/example** to understand how the tool operates. It should be fairly obvious for the most part.
 
 You can copy the example site to get a starting point for building your own site:
 
@@ -62,7 +62,7 @@ You can copy the example site to get a starting point for building your own site
 
 ## Advanced Usage
 
-Stagger features server-side syntax highlighting of source code using [highlight.php](https://github.com/scrivo/highlight.php) so no JavaScript is needed. Choose one CSS file from *vendor/scrivo/highlight.php/styles* directory and include it in your website.
+Stagger features server-side syntax highlighting of source code using [highlight.php](https://github.com/scrivo/highlight.php) so no JavaScript is needed. Choose one CSS file from **vendor/scrivo/highlight.php/styles** directory and include it in your website.
 
 If you need additional features for Markdown, take a look at [extensions for CommonMark](https://commonmark.thephpleague.com/2.0/extensions/overview/) that can be enabled.
 
