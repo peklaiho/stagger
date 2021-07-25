@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23efae4f615a832cf1944b247b27e2b4",
+    "content-hash": "c8fe56534f2c744360213cde17eb4a33",
     "packages": [
         {
             "name": "dflydev/dot-access-data",
@@ -83,16 +83,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.0.0-rc2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "61f4efe57db6b8c02a1470dd0894fbacf23ef19b"
+                "reference": "167142baf9a6b946f99ad9325b06028606f8238e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/61f4efe57db6b8c02a1470dd0894fbacf23ef19b",
-                "reference": "61f4efe57db6b8c02a1470dd0894fbacf23ef19b",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/167142baf9a6b946f99ad9325b06028606f8238e",
+                "reference": "167142baf9a6b946f99ad9325b06028606f8238e",
                 "shasum": ""
             },
             "require": {
@@ -190,7 +190,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-07-17T17:20:25+00:00"
+            "time": "2021-07-24T20:12:58+00:00"
         },
         {
             "name": "league/config",
@@ -1011,9 +1011,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "league/commonmark": 5
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
