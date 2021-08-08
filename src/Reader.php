@@ -99,6 +99,8 @@ class Reader
                 if ($page instanceof Post) {
                     $page->category = $info['category'] ?? null;
                     $page->tags = $info['tags'] ?? [];
+                } elseif ($page instanceof Blog) {
+                    $page->previewParagraphs = $info['preview_paragraphs'] ?? 2;
                 }
             } else {
                 $page->content = $data;

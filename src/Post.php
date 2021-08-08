@@ -52,6 +52,12 @@ class Post extends Page
     {
         $preview = [];
 
+        if ($this->parent instanceof Blog) {
+            $paragraphs = $this->parent->previewParagraphs;
+        } else {
+            $paragraphs = 2;
+        }
+
         // Get everything inside paragraph tags
         if (preg_match_all('/<p[^>]*>(.+)<\/p>/', $this->content, $matches)) {
             foreach ($matches as $match) {
@@ -61,7 +67,7 @@ class Post extends Page
                         continue;
                     }
 
-                    if (count($preview) < 2) {
+                    if (count($preview) < $paragraphs) {
                         $preview[] = $matches[0][$i];
                     }
                 }

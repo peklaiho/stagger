@@ -6,6 +6,8 @@ namespace Stagger;
  */
 class Blog extends Page
 {
+    public int $previewParagraphs = 2;
+
     /**
      * Return data used in rendering Twig templates.
      */
