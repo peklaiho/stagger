@@ -3,3 +3,4 @@ output/*
 sites/*
 !sites/example/
 vendor/
+composer.lock

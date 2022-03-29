@@ -15,10 +15,10 @@
         "source": "https://bitbucket.org/maddy83/stagger/"
     },
     "require": {
-        "league/commonmark": "~2.2",
-        "symfony/yaml": "~5.4",
-        "twig/twig": "~3.3",
-        "scrivo/highlight.php": "~9.18"
+        "league/commonmark": "^2.0",
+        "symfony/yaml": "^6.0",
+        "twig/twig": "^3.0",
+        "scrivo/highlight.php": "^9.0"
     },
     "require-dev": {
 
