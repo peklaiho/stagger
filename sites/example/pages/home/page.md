@@ -8,7 +8,7 @@ home: true
 
 # Example site
 
-This is the homepage for an example website generated with [Stagger](https://bitbucket.org/maddy83/stagger/).
+This is the homepage for an example website generated with [Stagger](https://github.com/peklaiho/stagger).
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sapien mi, dignissim a ornare id, convallis a magna. Ut orci magna, ullamcorper et nulla sed, eleifend pharetra odio. Morbi ac lacinia augue, quis dictum lectus. Proin egestas tellus ex. Ut maximus sapien vitae semper porttitor.
 

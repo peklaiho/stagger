@@ -1,8 +1,8 @@
 {
-    "name": "maddy83/stagger",
+    "name": "peklaiho/stagger",
     "description": "Stagger is a minimalist static website generator.",
     "type": "project",
-    "homepage": "https://bitbucket.org/maddy83/stagger/",
+    "homepage": "https://github.com/peklaiho/stagger",
     "license": "MIT",
     "authors": [
         {
@@ -12,7 +12,7 @@
         }
     ],
     "support": {
-        "source": "https://bitbucket.org/maddy83/stagger/"
+        "source": "https://github.com/peklaiho/stagger"
     },
     "require": {
         "league/commonmark": "^2.0",
@@ -22,6 +22,9 @@
     },
     "require-dev": {
 
+    },
+    "replace": {
+        "maddy83/stagger": "^1.0"
     },
     "autoload": {
         "psr-4": {

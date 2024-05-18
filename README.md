@@ -36,8 +36,8 @@ Second, make sure you have installed [Composer](https://getcomposer.org/). If no
 
 To get started, create a new project using Composer:
 
-    $ composer create-project maddy83/stagger mysite
-    Creating a "maddy83/stagger" project at "./mysite"
+    $ composer create-project peklaiho/stagger mysite
+    Creating a "peklaiho/stagger" project at "./mysite"
     $ cd mysite
 
 You can generate the example website like this:
@@ -94,6 +94,6 @@ Functionality on Windows has not been tested and may require small modifications
 
 ## License
 
-[MIT](https://bitbucket.org/maddy83/stagger/src/master/LICENSE)
+MIT
 
 If you use this tool to make a website, it would be greatly appreciated if you add a mention (e.g. "Made with Stagger" or similar) with a link to this repo. Thanks!
