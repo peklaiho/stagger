@@ -19,11 +19,13 @@ class Site
     public ?File $icon = null;
     public ?File $image = null;
     public array $meta = [];
+    public array $socials = [];
 
     // Content
     public array $templates = [];
     public array $css = [];
     public array $js = [];
+    public array $img = [];
     public array $cssClasses = [];
     public array $pages = [];
     public array $menu = [];
@@ -60,6 +62,7 @@ class Site
         }
 
         $data['meta'] = $this->meta;
+        $data['socials'] = $this->socials;
 
         $fn = function ($f) {
             return $f->filename;
@@ -67,6 +70,7 @@ class Site
 
         $data['css'] = array_map($fn, $this->css);
         $data['js'] = array_map($fn, $this->js);
+        $data['img'] = array_map($fn, $this->img);
 
         // Build menu
         $menu = [];

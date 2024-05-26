@@ -46,13 +46,14 @@ class Parser
         $site->author = $info['author'] ?? null;
         $site->lang = $info['lang'] ?? null;
         $site->meta = $info['meta'] ?? [];
+        $site->socials = $info['socials'] ?? [];
 
         // Favicon
         if (array_key_exists('icon', $info)) {
             $site->icon = $this->reader->readSimpleFile($dir . $info['icon']);
         }
 
-        // Image
+        // Main image
         if (array_key_exists('image', $info)) {
             $site->image = $this->reader->readSimpleFile($dir . $info['image']);
         }
@@ -60,9 +61,10 @@ class Parser
         // Templates
         $site->templates = $this->reader->readDirectory($dir . 'templates/');
 
-        // Styles and scripts
+        // Styles, scripts and images
         $site->css = $this->reader->readFiles($dir . 'css/', $info['css'] ?? []);
         $site->js = $this->reader->readFiles($dir . 'js/', $info['js'] ?? []);
+        $site->img = $this->reader->readFiles($dir . 'img/', $info['img'] ?? []);
 
         // Css classes (before pages)
         $site->cssClasses = $info['classes'] ?? [];

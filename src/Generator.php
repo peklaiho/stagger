@@ -46,12 +46,22 @@ class Generator
             }
         }
 
+        // Write images
+        if ($site->img) {
+            $imgdir = $outdir . 'img/';
+            $this->makedir($imgdir);
+
+            foreach ($site->img as $file) {
+                file_put_contents($imgdir . $file->filename, $file->content);
+            }
+        }
+
         // Write icon
         if ($site->icon) {
             file_put_contents($outdir . $site->icon->filename, $site->icon->content);
         }
 
-        // Write image
+        // Write site image
         if ($site->image) {
             file_put_contents($outdir . $site->image->filename, $site->image->content);
         }
