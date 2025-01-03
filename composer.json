@@ -8,7 +8,7 @@
         {
             "name": "Pekka Laiho",
             "email": "pekka.i.laiho@gmail.com",
-            "homepage": "http://laihoconsulting.com/"
+            "homepage": "https://laihoconsulting.com/"
         }
     ],
     "support": {
@@ -22,9 +22,6 @@
     },
     "require-dev": {
 
-    },
-    "replace": {
-        "maddy83/stagger": "^1.0"
     },
     "autoload": {
         "psr-4": {
