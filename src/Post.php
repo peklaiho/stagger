@@ -23,19 +23,26 @@ class Post extends Page
             $data['tags'] = $this->tags;
         }
 
-        if ($getPreviousNext && $this->parent && $this->parent instanceof Blog) {
-            $previous = $this->parent->getPrevious($this);
-            if ($previous) {
-                $data['previous'] = $previous->getTwigData($sitedata, false);
+        if ($this->parent && $this->parent instanceof Blog) {
+            if ($getPreviousNext) {
+                $previous = $this->parent->getPrevious($this);
+                if ($previous) {
+                    $data['previous'] = $previous->getTwigData($sitedata, false);
+                }
+
+                $next = $this->parent->getNext($this);
+                if ($next) {
+                    $data['next'] = $next->getTwigData($sitedata, false);
+                }
             }
 
-            $next = $this->parent->getNext($this);
-            if ($next) {
-                $data['next'] = $next->getTwigData($sitedata, false);
+            if ($sitedata['rss_enabled']) {
+                $data['rss_url'] = $sitedata['site_url'] . $this->parent->getPath(false) . 'rss.xml';
             }
         }
 
         $data['preview'] = $this->makePreview();
+        $data['summary'] = $this->makeSummary();
 
         return $data;
     }
@@ -50,13 +57,23 @@ class Post extends Page
      */
     protected function makePreview(): string
     {
-        $preview = [];
-
         if ($this->parent instanceof Blog) {
             $paragraphs = $this->parent->previewParagraphs;
         } else {
             $paragraphs = 2;
         }
+
+        return $this->getInitialParagraphs($paragraphs);
+    }
+
+    protected function makeSummary(): string
+    {
+        return strip_tags($this->getInitialParagraphs(1));
+    }
+
+    protected function getInitialParagraphs(int $count): string
+    {
+        $results = [];
 
         // Get everything inside paragraph tags
         if (preg_match_all('/<p[^>]*>(.+)<\/p>/', $this->content, $matches)) {
@@ -67,13 +84,13 @@ class Post extends Page
                         continue;
                     }
 
-                    if (count($preview) < $paragraphs) {
-                        $preview[] = $matches[0][$i];
+                    if (count($results) < $count) {
+                        $results[] = $matches[0][$i];
                     }
                 }
             }
         }
 
-        return implode(PHP_EOL, $preview);
+        return implode(PHP_EOL, $results);
     }
 }

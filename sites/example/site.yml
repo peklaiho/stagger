@@ -24,6 +24,9 @@ meta: {
   twitter: false
 }
 
+# Generate RSS feed
+rss: true
+
 # CSS-files
 css: [
   spectre.css,

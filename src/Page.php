@@ -38,10 +38,12 @@ class Page extends File
         if ($this->date) {
             $data['date'] = $this->date;
             $data['pretty_date'] = date('j F Y', strtotime($this->date));
+            $data['rfc_date'] = date('r', strtotime($this->date));
         }
         if ($this->edited) {
             $data['edited'] = $this->edited;
             $data['pretty_edited'] = date('j F Y', strtotime($this->edited));
+            $data['rfc_edited'] = date('r', strtotime($this->edited));
         }
         if ($this->image) {
             $data['page_image'] = $this->image;
@@ -69,6 +71,19 @@ class Page extends File
         }
 
         return $path;
+    }
+
+    public function getMaxDateOfChildren(): ?int
+    {
+        $dates = [];
+
+        foreach ($this->children as $child) {
+            if ($child->date) {
+                $dates[] = strtotime($child->date);
+            }
+        }
+
+        return empty($dates) ? null : max($dates);
     }
 
     public function getType(): string

@@ -96,7 +96,8 @@ $twigEnv = new Twig\Environment($twigLoader, [
 // Process site and write it to output directory
 $highlighter = new Highlight\Highlighter();
 $processor = new Stagger\Processor($highlighter);
-$generator = new Stagger\Generator($twigEnv, $processor);
+$rssGen = new Stagger\RssGenerator($twigEnv);
+$generator = new Stagger\Generator($twigEnv, $processor, $rssGen);
 $generator->generate($site);
 
 show_info(PHP_EOL . "Generated site in " . OUTPUT_DIR . "$sitename in " . number_format(microtime(true) - $startTime, 3) . "s.");

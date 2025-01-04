@@ -25,6 +25,9 @@
     <link rel="icon" type="{{ icon.filetype }}" href="/{{ icon.filename }}" />
     {% endif %}
     <link rel="canonical" href="{{ page_url }}" />
+    {% if rss_url %}
+    <link rel="alternate" title="RSS feed for Example Blog" type="application/rss+xml" href="{{ rss_url }}" />
+    {% endif %}
     {% if meta.og %}
         <meta property="og:site_name" content="{{ site_title }}" />
         <meta property="og:title" content="{{ page_title }}" />

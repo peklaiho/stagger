@@ -20,6 +20,7 @@ class Site
     public ?File $image = null;
     public array $meta = [];
     public array $socials = [];
+    public bool $rss = false;
 
     // Content
     public array $templates = [];
@@ -42,7 +43,8 @@ class Site
     {
         $data = [
             'site_title' => $this->title,
-            'site_url' => $this->url
+            'site_url' => $this->url,
+            'rss_enabled' => $this->rss,
         ];
 
         if ($this->description) {

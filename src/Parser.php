@@ -47,6 +47,7 @@ class Parser
         $site->lang = $info['lang'] ?? null;
         $site->meta = $info['meta'] ?? [];
         $site->socials = $info['socials'] ?? [];
+        $site->rss = boolval($info['rss'] ?? false);
 
         // Favicon
         if (array_key_exists('icon', $info)) {
@@ -58,8 +59,11 @@ class Parser
             $site->image = $this->reader->readSimpleFile($dir . $info['image']);
         }
 
-        // Templates
-        $site->templates = $this->reader->readDirectory($dir . 'templates/');
+        // Templates (default templates and site templates)
+        $site->templates = array_merge(
+            $this->reader->readDirectory(__DIR__ . '/../templates/'),
+            $this->reader->readDirectory($dir . 'templates/'),
+        );
 
         // Styles, scripts and images
         $site->css = $this->reader->readFiles($dir . 'css/', $info['css'] ?? []);

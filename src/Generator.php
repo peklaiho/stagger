@@ -10,11 +10,13 @@ class Generator
 {
     private Environment $twig;
     private Processor $processor;
+    private RssGenerator $rssGen;
 
-    public function __construct(Environment $twig, Processor $processor)
+    public function __construct(Environment $twig, Processor $processor, RssGenerator $rssGen)
     {
         $this->twig = $twig;
         $this->processor = $processor;
+        $this->rssGen = $rssGen;
     }
 
     /**
@@ -110,6 +112,14 @@ class Generator
                 $data['page_title'] = $page->title . ': ' . $tag;
                 $data['posts'] = $page->getTwigDataForPosts($sitedata, $tag);
                 $this->renderAndWrite($site, $page, $pagedir . "tag-$tag.html", $data);
+            }
+
+            // Generate RSS feed
+            if ($site->rss) {
+                $rss = $this->rssGen->generate($site, $page);
+                $rssFile = $pagedir . 'rss.xml';
+                show_info("Writing RSS feed: $rssFile");
+                file_put_contents($rssFile, $rss);
             }
         }
 

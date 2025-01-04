@@ -19,6 +19,10 @@ class Blog extends Page
 
         $data['tags'] = $this->getChildTags();
 
+        if ($sitedata['rss_enabled']) {
+            $data['rss_url'] = $sitedata['site_url'] . $this->getPath(false) . 'rss.xml';
+        }
+
         return $data;
     }
 

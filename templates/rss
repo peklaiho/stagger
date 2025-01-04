@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <atom:link href="{{ page_url }}rss.xml" rel="self" type="application/rss+xml" />
+  <title>{{ page_title }} | {{ site_title }}</title>
+{% if description %}
+  <description>{{ description }}</description>
+{% endif %}
+  <link>{{ page_url }}</link>
+{% if lang %}
+  <language>{{ lang }}</language>
+{% endif %}
+  <lastBuildDate>{{ rss_last_build_date }}</lastBuildDate>
+  <pubDate>{{ rss_pub_date }}</pubDate>
+  <generator>https://github.com/peklaiho/stagger</generator>
+{% if page_image %}
+  <image>
+    <link>{{ page_url }}</link>
+    <title>{{ page_title }} | {{ site_title }}</title>
+    <url>{{ page_url }}{{ page_image }}</url>
+  </image>
+{% elseif site_image %}
+  <image>
+    <link>{{ page_url }}</link>
+    <title>{{ page_title }} | {{ site_title }}</title>
+    <url>{{ site_url }}{{ site_image.filename }}</url>
+  </image>
+{% endif %}
+{% for post in posts %}
+  <item>
+    <title>{{ post.page_title }}</title>
+    <description>{{ post.summary }}</description>
+    <link>{{ post.page_url }}</link>
+    <pubDate>{{ post.rfc_date }}</pubDate>
+    <guid>{{ post.page_url }}</guid>
+  </item>
+{% endfor %}
+</channel>
+</rss>
